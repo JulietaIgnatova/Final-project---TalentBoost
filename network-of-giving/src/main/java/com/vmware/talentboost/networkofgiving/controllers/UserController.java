@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.List;
 
 @CrossOrigin(maxAge = 3600)
@@ -50,22 +51,6 @@ public class UserController {
         userService.deleteUser(username);
     }
 
-    @ExceptionHandler(EmptyResultDataAccessException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void userNotFoundExceptionHandler() {
-    }
-
-//    @ExceptionHandler(SQLException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public void incorrectSQLExceptionHandler() {
-//    }
-//
-//    @ExceptionHandler(IllegalArgumentException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public void illegalArgumentsHandler() {
-//    }
-
-
 
     @GetMapping("/{username}/charities/participated")
     public List<Charity> getAllParticipatedCharity(@PathVariable("username") String username) {
@@ -73,8 +58,28 @@ public class UserController {
     }
 
     @GetMapping("/{username}/charities/donated")
-    public List<Charity> getAllDonatedCharities(@PathVariable("username") String username){
+    public List<Charity> getAllDonatedCharities(@PathVariable("username") String username) {
         return userService.getAllDonatedCharities(username);
+    }
+
+    @GetMapping("/{username}/charities/created")
+    public List<Charity> getAllCreatedCharities(@PathVariable("username") String username) {
+        return userService.getAllCreatedCharities(username);
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void userNotFoundExceptionHandler() {
+    }
+
+    @ExceptionHandler(SQLException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void incorrectSQLExceptionHandler() {
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void illegalArgumentsHandler() {
     }
 
 }

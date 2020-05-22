@@ -7,9 +7,10 @@ import java.util.List;
 
 public interface IUserRepository {
     List<User> getAllUsers();
+
     User getUser(String username);
 
-//    boolean checkIfUserExist(String username);
+    public boolean checkUser(String username);
 
     void addUser(User user);
 

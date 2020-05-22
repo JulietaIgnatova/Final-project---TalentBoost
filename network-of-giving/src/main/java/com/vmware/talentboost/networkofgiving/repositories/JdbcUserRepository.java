@@ -1,5 +1,7 @@
 package com.vmware.talentboost.networkofgiving.repositories;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,10 +19,11 @@ public class JdbcUserRepository implements IUserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-//    @Override
-//    public boolean checkIfUserExist(String username) {
-//        return !isEmpty(jdbcTemplate.query("SELECT * FROM user_info WHERE username = ?", this::mapUserRow, username));
-//    }
+
+    @Override
+    public boolean checkUser(String username) {
+        return !isEmpty(jdbcTemplate.query("SELECT * FROM USERS WHERE username = ?", this::mapUserRow, username));
+    }
 
     @Override
     public List<User> getAllUsers() {

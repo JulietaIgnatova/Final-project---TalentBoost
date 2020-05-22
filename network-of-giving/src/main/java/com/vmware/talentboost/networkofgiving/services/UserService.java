@@ -24,37 +24,62 @@ public class UserService implements IUserService {
 
     @Override
     public User getUser(String username) {
+        if (repository.checkUser(username)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+
         return repository.getUser(username);
     }
 
     @Override
     public void addUser(final User user) {
-         repository.addUser(user);
+        if (repository.checkUser(user.getUsername())) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+        repository.addUser(user);
     }
 
     @Override
     public void updateUser(String username, User user) {
-        repository.updateUser(username,user);
+        if (!repository.checkUser(username)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+
+        repository.updateUser(username, user);
     }
 
     @Override
     public void deleteUser(String username) {
+        if (!repository.checkUser(username)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
 
         repository.deleteUser(username);
     }
 
     @Override
     public List<Charity> getAllParticipatedCharities(String username) {
+        if (!repository.checkUser(username)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+
         return repository.getAllParticipatedCharities(username);
     }
 
     @Override
     public List<Charity> getAllDonatedCharities(String username) {
+        if (!repository.checkUser(username)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+
         return repository.getAllDonatedCharities(username);
     }
 
     @Override
     public List<Charity> getAllCreatedCharities(String username) {
+        if (!repository.checkUser(username)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
         return repository.getAllCreatedCharities(username);
     }
 }

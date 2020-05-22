@@ -2,9 +2,11 @@ package com.vmware.talentboost.networkofgiving.services;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class CharityService implements ICharityService {
     @Override
     public List<Charity> getAllCharity() {
