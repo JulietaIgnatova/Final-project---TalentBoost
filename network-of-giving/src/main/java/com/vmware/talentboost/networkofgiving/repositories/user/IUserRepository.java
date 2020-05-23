@@ -1,14 +1,16 @@
-package com.vmware.talentboost.networkofgiving.services;
+package com.vmware.talentboost.networkofgiving.repositories.user;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 
 import java.util.List;
 
-public interface IUserService {
+public interface IUserRepository {
     List<User> getAllUsers();
 
     User getUser(String username);
+
+    public boolean checkUser(String username);
 
     void addUser(User user);
 
@@ -21,5 +23,4 @@ public interface IUserService {
     List<Charity> getAllDonatedCharities(String username);
 
     List<Charity> getAllCreatedCharities(String username);
-
 }

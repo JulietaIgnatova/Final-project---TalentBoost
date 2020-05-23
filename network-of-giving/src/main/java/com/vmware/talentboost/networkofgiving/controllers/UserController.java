@@ -1,7 +1,7 @@
 package com.vmware.talentboost.networkofgiving.controllers;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
-import com.vmware.talentboost.networkofgiving.services.IUserService;
+import com.vmware.talentboost.networkofgiving.services.user.IUserService;
 
 import com.vmware.talentboost.networkofgiving.models.User;
 import org.springframework.dao.EmptyResultDataAccessException;

@@ -1,9 +1,8 @@
-package com.vmware.talentboost.networkofgiving.services;
+package com.vmware.talentboost.networkofgiving.services.charity;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
-import com.vmware.talentboost.networkofgiving.repositories.ICharityRepository;
-import com.vmware.talentboost.networkofgiving.repositories.IUserRepository;
+import com.vmware.talentboost.networkofgiving.repositories.charity.ICharityRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -68,5 +67,11 @@ public class CharityService implements ICharityService {
             throw new IllegalArgumentException("Invalid arguments");
         }
         return repository.getDonatorsForCharity(title);
+    }
+
+    @Override
+    public User getCreatorForCharity(String title) {
+
+        return repository.getCreatorForCharity(title);
     }
 }

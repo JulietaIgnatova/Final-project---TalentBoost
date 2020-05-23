@@ -1,4 +1,4 @@
-package com.vmware.talentboost.networkofgiving.repositories;
+package com.vmware.talentboost.networkofgiving.repositories.user;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -37,22 +37,21 @@ public class JdbcUserRepository implements IUserRepository {
 
     @Override
     public void addUser(User user) {
-        jdbcTemplate.update("INSERT INTO USERS(name,username,age,gender, location) VALUES (?, ?, ?, ?, ?) ",user.getName(),
-                user.getUsername(),user.getAge(), user.getGender(), user.getLocation());
+        jdbcTemplate.update("INSERT INTO USERS(name,username,age,gender, location) VALUES (?, ?, ?, ?, ?) ", user.getName(),
+                user.getUsername(), user.getAge(), user.getGender(), user.getLocation());
 
     }
 
     @Override
     public void updateUser(String username, User user) {
         jdbcTemplate.update("UPDATE USERS SET name = ?, age = ?, gender = ?, location = ? WHERE username = ?",
-                user.getName(),user.getAge(), user.getGender(), user.getLocation(),username );
+                user.getName(), user.getAge(), user.getGender(), user.getLocation(), username);
     }
 
     @Override
     public void deleteUser(String username) {
         jdbcTemplate.update("DELETE FROM USERS WHERE username = ?", username);
     }
-
 
 
     @Override
@@ -65,12 +64,14 @@ public class JdbcUserRepository implements IUserRepository {
     public List<Charity> getAllDonatedCharities(String username) {
 
         return jdbcTemplate.query("SELECT * FROM CHARITIES WHERE id IN" +
-                " (SELECT charity_id FROM USERS JOIN DONATORS ON id=user_id where username = ?)",new CharityMapRower(),username);
+                " (SELECT charity_id FROM USERS JOIN DONATORS ON id=user_id where username = ?)", new CharityMapRower(), username);
     }
 
     @Override
     public List<Charity> getAllCreatedCharities(String username) {
-        return null;
+
+        return jdbcTemplate.query("SELECT * FROM CHARITIES WHERE creator_id IN" +
+                " (SELECT id FROM USERS WHERE username = ?)", new CharityMapRower(), username);
     }
 
 

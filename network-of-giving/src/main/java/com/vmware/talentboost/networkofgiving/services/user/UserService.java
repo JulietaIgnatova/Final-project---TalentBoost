@@ -1,8 +1,8 @@
-package com.vmware.talentboost.networkofgiving.services;
+package com.vmware.talentboost.networkofgiving.services.user;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
-import com.vmware.talentboost.networkofgiving.repositories.IUserRepository;
+import com.vmware.talentboost.networkofgiving.repositories.user.IUserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

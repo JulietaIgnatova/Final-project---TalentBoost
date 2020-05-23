@@ -2,7 +2,7 @@ package com.vmware.talentboost.networkofgiving.controllers;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
-import com.vmware.talentboost.networkofgiving.services.ICharityService;
+import com.vmware.talentboost.networkofgiving.services.charity.ICharityService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,6 +39,33 @@ public class CharityController {
     }
 
 
+    @PutMapping(path = "/{title}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCharity(@PathVariable("title") String title, @RequestBody @Valid Charity charity) {
+        charityService.updateCharity(title, charity);
+    }
+
+    @DeleteMapping("/{title}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCharity(@PathVariable("title") String title) {
+        charityService.deleteCharity(title);
+    }
+
+
+    @GetMapping("/{title}/participants")
+    public List<User> getParticipantsForCharity(@PathVariable("title") String title) {
+        return charityService.getParticipantsForCharity(title);
+    }
+
+    @GetMapping("/{title}/donators")
+    public List<User> getDonatorsForCharity(@PathVariable("title") String title) {
+        return charityService.getDonatorsForCharity(title);
+    }
+
+    @GetMapping("/{title}/creator")
+    public User getCreatorForCharity(@PathVariable("title") String title){
+        return charityService.getCreatorForCharity(title);
+    }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
