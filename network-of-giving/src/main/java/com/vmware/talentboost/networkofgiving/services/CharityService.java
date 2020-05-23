@@ -2,44 +2,71 @@ package com.vmware.talentboost.networkofgiving.services;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
+import com.vmware.talentboost.networkofgiving.repositories.ICharityRepository;
+import com.vmware.talentboost.networkofgiving.repositories.IUserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class CharityService implements ICharityService {
+    private final ICharityRepository repository;
+
+    public CharityService(ICharityRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
-    public List<Charity> getAllCharity() {
-        return null;
+    public List<Charity> getAllCharities() {
+
+        return repository.getAllCharities();
     }
 
     @Override
     public Charity getCharity(String title) {
-        return null;
+
+        return repository.getCharity(title);
     }
 
     @Override
     public void addCharity(Charity charity) {
 
+        repository.addCharity(charity);
+
     }
 
     @Override
     public void updateCharity(String title, Charity charity) {
+        if (!repository.checkCharity(title)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
 
+        repository.updateCharity(title, charity);
     }
 
     @Override
-    public void deleteCharity(String charity) {
+    public void deleteCharity(String title) {
+        if (!repository.checkCharity(title)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+
+        repository.deleteCharity(title);
 
     }
 
     @Override
     public List<User> getParticipantsForCharity(String title) {
-        return null;
+        if (!repository.checkCharity(title)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+        return repository.getParticipantsForCharity(title);
     }
 
     @Override
     public List<User> getDonatorsForCharity(String title) {
-        return null;
+        if (!repository.checkCharity(title)) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+        return repository.getDonatorsForCharity(title);
     }
 }

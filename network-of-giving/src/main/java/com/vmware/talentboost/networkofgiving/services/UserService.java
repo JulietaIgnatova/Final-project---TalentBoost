@@ -24,18 +24,11 @@ public class UserService implements IUserService {
 
     @Override
     public User getUser(String username) {
-        if (repository.checkUser(username)) {
-            throw new IllegalArgumentException("Invalid arguments");
-        }
-
         return repository.getUser(username);
     }
 
     @Override
     public void addUser(final User user) {
-        if (repository.checkUser(user.getUsername())) {
-            throw new IllegalArgumentException("Invalid arguments");
-        }
         repository.addUser(user);
     }
 
@@ -44,7 +37,6 @@ public class UserService implements IUserService {
         if (!repository.checkUser(username)) {
             throw new IllegalArgumentException("Invalid arguments");
         }
-
         repository.updateUser(username, user);
     }
 
@@ -62,7 +54,6 @@ public class UserService implements IUserService {
         if (!repository.checkUser(username)) {
             throw new IllegalArgumentException("Invalid arguments");
         }
-
         return repository.getAllParticipatedCharities(username);
     }
 

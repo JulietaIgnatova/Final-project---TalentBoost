@@ -1,25 +1,24 @@
-package com.vmware.talentboost.networkofgiving.services;
+package com.vmware.talentboost.networkofgiving.repositories;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 
 import java.util.List;
 
-public interface ICharityService {
+public interface ICharityRepository {
     List<Charity> getAllCharities();
 
     Charity getCharity(String title);
+
+    public boolean checkCharity(String title);
 
     void addCharity(Charity charity);
 
     void updateCharity(String title, Charity charity);
 
-    void deleteCharity(String title);
+    void deleteCharity(String charity);
 
     List<User> getParticipantsForCharity(String title);
 
     List<User> getDonatorsForCharity(String title);
-
-
-
 }
