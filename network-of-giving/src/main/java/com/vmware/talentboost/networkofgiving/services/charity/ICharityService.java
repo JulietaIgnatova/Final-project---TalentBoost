@@ -22,5 +22,6 @@ public interface ICharityService {
 
     User getCreatorForCharity(String title);
 
+    void donateMoneyForCharity(Charity charity, int userId, double money);
 
 }

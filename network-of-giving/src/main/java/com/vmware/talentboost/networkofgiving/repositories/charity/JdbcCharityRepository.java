@@ -2,8 +2,9 @@ package com.vmware.talentboost.networkofgiving.repositories.charity;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
-import com.vmware.talentboost.networkofgiving.util.CharityMapRower;
-import com.vmware.talentboost.networkofgiving.util.UserMapRower;
+import com.vmware.talentboost.networkofgiving.util.maprow.CharityMapRower;
+import com.vmware.talentboost.networkofgiving.util.maprow.DonatorMapRower;
+import com.vmware.talentboost.networkofgiving.util.maprow.UserMapRower;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -79,5 +80,17 @@ public class JdbcCharityRepository implements ICharityRepository {
     public User getCreatorForCharity(String title) {
         return jdbcTemplate.queryForObject("SELECT * FROM USERS WHERE id = " +
                 "(SELECT creator_id FROM CHARITIES WHERE title = ?)", new UserMapRower(), title);
+    }
+
+    private void addDonater(int userId, int chariryId, double money){
+         jdbcTemplate.update("INSERT INTO DONATORS(user_id, charity_id, donated_money) VALUES(?, ?, ?)",userId,chariryId,money );
+    }
+
+    private boolean checkIfAlreadyDonated(int userId, int charityId){
+        return !isEmpty(jdbcTemplate.query("SELECT * FROM DONATORS WHERE user_id = ? AND charity_id =?", new DonatorMapRower(),userId,charityId));
+    }
+
+    private void updateDonator(int userId, int charityId){
+       // return jdbcTemplate.update("UPDATE DONATORS SET donated_money = donated_money + ");
     }
 }

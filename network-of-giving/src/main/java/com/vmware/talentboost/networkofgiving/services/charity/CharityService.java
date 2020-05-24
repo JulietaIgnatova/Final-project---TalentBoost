@@ -3,6 +3,7 @@ package com.vmware.talentboost.networkofgiving.services.charity;
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.repositories.charity.ICharityRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public class CharityService implements ICharityService {
     private final ICharityRepository repository;
 
+    @Autowired
     public CharityService(ICharityRepository repository) {
         this.repository = repository;
     }
@@ -73,5 +75,11 @@ public class CharityService implements ICharityService {
     public User getCreatorForCharity(String title) {
 
         return repository.getCreatorForCharity(title);
+    }
+
+    @Override
+    public void donateMoneyForCharity(Charity charity, int userId, double money) {
+        repository.updateCharity(charity.getTitle(),charity);
+        //repository.addDonation(userId,charity.getId(),money);
     }
 }

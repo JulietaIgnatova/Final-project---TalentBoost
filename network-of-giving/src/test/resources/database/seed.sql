@@ -1,9 +1,3 @@
-DROP TABLE IF EXISTS Users;
-
-DROP TABLE IF EXISTS Charities;
-
-DROP TABLE IF EXISTS Participants;
-
 CREATE TABLE IF NOT EXISTS Users(
     id INT IDENTITY PRIMARY KEY,
     name VARCHAR(128) NOT NULL,
@@ -29,5 +23,18 @@ CREATE TABLE IF NOT EXISTS Participants(
     charity_id INT
 );
 
---ALTER TABLE Charities ADD CONSTRAINT FK_USER_ID FOREIGN
---KEY (id) REFERENCES Users(id)  ON DELETE CASCADE;
+
+INSERT INTO Users (name,username,age,gender,location)
+VALUES
+('Maria','maria',21,'F','Sofia'),
+('Martin','martin',22,'M','Plovdiv');
+
+INSERT INTO Charities(creator_id, title, description, budget_required, amount_collected,volunteers_required, volunteers_signed_up)
+VALUES
+(1,'save the world','we are going to clean the world',10000,200,20,10),
+(2,'better world','good people',10000,200,20,10);
+
+INSERT INTO Participants
+values
+(1,1),
+(1,2);

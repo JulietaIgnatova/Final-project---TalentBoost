@@ -4,8 +4,8 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
-import com.vmware.talentboost.networkofgiving.util.CharityMapRower;
-import com.vmware.talentboost.networkofgiving.util.UserMapRower;
+import com.vmware.talentboost.networkofgiving.util.maprow.CharityMapRower;
+import com.vmware.talentboost.networkofgiving.util.maprow.UserMapRower;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

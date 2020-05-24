@@ -14,6 +14,17 @@ public class User {
     private int age;
     private String gender;
 
+    public User(){}
+
+    public User(int id, String name, @NotBlank @Length(max = 128) String username, int age, String gender, String location) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.age = age;
+        this.gender = gender;
+        this.location = location;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

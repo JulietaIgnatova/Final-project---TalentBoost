@@ -4,6 +4,7 @@ import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.services.user.IUserService;
 
 import com.vmware.talentboost.networkofgiving.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ import java.util.List;
 public class UserController {
     private final IUserService userService;
 
+    @Autowired
     public UserController(IUserService userService) {
         this.userService = userService;
     }
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.CREATED)
     public void addUser(@RequestBody @Valid User user) {
         userService.addUser(user);
     }
@@ -53,7 +55,7 @@ public class UserController {
 
 
     @GetMapping("/{username}/charities/participated")
-    public List<Charity> getAllParticipatedCharity(@PathVariable("username") String username) {
+    public List<Charity> getAllParticipatedCharities(@PathVariable("username") String username) {
         return userService.getAllParticipatedCharities(username);
     }
 

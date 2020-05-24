@@ -1,0 +1,14 @@
+image: maven:3-jdk-9
+
+stages:
+    - build
+
+before_script:
+  - echo "Start of CI/CD Pipeline"
+
+buildPrj:
+    stage: build
+    script: 
+        - cd network-of-giving
+        - mvn clean install
+

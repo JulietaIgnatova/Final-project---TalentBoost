@@ -23,4 +23,5 @@ public interface ICharityRepository {
     List<User> getDonatorsForCharity(String title);
 
     User getCreatorForCharity(String title);
+
 }
