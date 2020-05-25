@@ -11,13 +11,13 @@ public class CharityMapRower implements RowMapper<Charity> {
     public Charity mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         Charity result = new Charity();
         result.setId(resultSet.getInt("id"));
-        result.setCreator_id(resultSet.getInt("creator_id"));
+        result.setCreatorId(resultSet.getInt("creator_id"));
         result.setTitle(resultSet.getString("title"));
         result.setDescription(resultSet.getString("description"));
-        result.setBudget_required(resultSet.getInt("budget_required"));
-        result.setAmount_collected(resultSet.getInt("amount_collected"));
-        result.setVolunteers_required(resultSet.getInt("volunteers_required"));
-        result.setVolunteers_signed_up(resultSet.getInt("volunteers_signed_up"));
+        result.setBudgetRequired(resultSet.getInt("budget_required"));
+        result.setAmountCollected(resultSet.getInt("amount_collected"));
+        result.setVolunteersRequired(resultSet.getInt("volunteers_required"));
+        result.setVolunteersSignedUp(resultSet.getInt("volunteers_signed_up"));
         return result;
     }
 

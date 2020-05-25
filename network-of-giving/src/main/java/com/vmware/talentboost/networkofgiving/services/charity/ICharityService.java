@@ -18,7 +18,7 @@ public interface ICharityService {
 
     List<User> getParticipantsForCharity(String title);
 
-    List<User> getDonatorsForCharity(String title);
+    List<User> getDonationsForCharity(String title);
 
     User getCreatorForCharity(String title);
 

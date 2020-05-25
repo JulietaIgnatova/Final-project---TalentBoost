@@ -42,8 +42,8 @@ public class JdbcCharityRepository implements ICharityRepository {
     @Override
     public void addCharity(Charity charity) {
         jdbcTemplate.update("INSERT INTO CHARITIES(creator_id, title, description, budget_required, amount_collected, volunteers_required, volunteers_signed_up)" +
-                        " VALUES (?, ?, ?, ?, ?, ?, ?) ", charity.getCreator_id(), charity.getTitle(), charity.getDescription(),
-                charity.getBudget_required(), charity.getAmount_collected(), charity.getVolunteers_required(), charity.getVolunteers_signed_up());
+                        " VALUES (?, ?, ?, ?, ?, ?, ?) ", charity.getCreatorId(), charity.getTitle(), charity.getDescription(),
+                charity.getBudgetRequired(), charity.getAmountCollected(), charity.getVolunteersRequired(), charity.getVolunteersSignedUp());
 
     }
 
@@ -51,9 +51,9 @@ public class JdbcCharityRepository implements ICharityRepository {
     public void updateCharity(String title, Charity charity) {
         jdbcTemplate.update("UPDATE CHARITIES SET creator_id=?, title=?, description=?, budget_required=?, " +
                         "amount_collected=?, volunteers_required=?, volunteers_signed_up=? WHERE title =?",
-                charity.getCreator_id(), charity.getTitle(), charity.getDescription(),
-                charity.getBudget_required(), charity.getAmount_collected(), charity.getVolunteers_required(),
-                charity.getVolunteers_signed_up(), title);
+                charity.getCreatorId(), charity.getTitle(), charity.getDescription(),
+                charity.getBudgetRequired(), charity.getAmountCollected(), charity.getVolunteersRequired(),
+                charity.getVolunteersSignedUp(), title);
 
     }
 
@@ -71,7 +71,7 @@ public class JdbcCharityRepository implements ICharityRepository {
     }
 
     @Override
-    public List<User> getDonatorsForCharity(String title) {
+    public List<User> getDonationsForCharity(String title) {
 
         return jdbcTemplate.query("SELECT * FROM USERS WHERE id IN " +
                 "(SELECT user_id FROM CHARITIES JOIN DONATORS ON id = charity_id WHERE TITLE = ?)", new UserMapRower(), title);
@@ -90,7 +90,7 @@ public class JdbcCharityRepository implements ICharityRepository {
         } else {
             addDonater(userId, charity.getId(), money);
         }
-        charity.setAmount_collected(money + charity.getAmount_collected());
+        charity.setAmountCollected(money + charity.getAmountCollected());
         updateCharity(charity.getTitle(), charity);
     }
 

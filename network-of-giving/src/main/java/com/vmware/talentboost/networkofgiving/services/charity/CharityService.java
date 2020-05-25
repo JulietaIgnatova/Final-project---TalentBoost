@@ -64,11 +64,11 @@ public class CharityService implements ICharityService {
     }
 
     @Override
-    public List<User> getDonatorsForCharity(String title) {
+    public List<User> getDonationsForCharity(String title) {
         if (!repository.checkCharity(title)) {
             throw new IllegalArgumentException("Invalid arguments");
         }
-        return repository.getDonatorsForCharity(title);
+        return repository.getDonationsForCharity(title);
     }
 
     @Override
@@ -79,12 +79,12 @@ public class CharityService implements ICharityService {
 
     @Override
     public void donateMoneyForCharity(Charity charity, int userId, double money) {
-        double newCollectedMoney = charity.getAmount_collected() + money;
+        double newCollectedMoney = charity.getAmountCollected() + money;
         if (!repository.checkCharity(charity.getTitle())) {
             throw new IllegalArgumentException("Chariry doesn't exists.");
         }
 
-        if (newCollectedMoney > charity.getBudget_required()) {
+        if (newCollectedMoney > charity.getBudgetRequired()) {
             throw new IllegalArgumentException("Too much money.Change the donation");
             //think for better exception
         }
@@ -94,13 +94,13 @@ public class CharityService implements ICharityService {
 
     @Override
     public void participateInCharity(Charity charity, int userId) {
-        int newVolunteersCount = charity.getVolunteers_signed_up() + 1;
+        int newVolunteersCount = charity.getVolunteersSignedUp() + 1;
 
         if (!repository.checkCharity(charity.getTitle())) {
             throw new IllegalArgumentException("Chariry doesn't exists.");
         }
 
-        if (newVolunteersCount > charity.getVolunteers_required()) {
+        if (newVolunteersCount > charity.getVolunteersRequired()) {
             throw new IllegalArgumentException("Too much volunteers");
             //think for better exception
         }

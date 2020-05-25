@@ -6,40 +6,40 @@ import javax.validation.constraints.NotBlank;
 
 public class Charity {
     private int id;
-    private int creator_id;
+    private int creatorId;
 
     @NotBlank
     @Length(max = 128)
     private String title;
 
     private String description;
-    private double budget_required;
-    private int volunteers_signed_up;
-    private double amount_collected;
-    private int volunteers_required;
+    private double budgetRequired;
+    private int volunteersSignedUp;
+    private double amountCollected;
+    private int volunteersRequired;
 
     public Charity() {
     }
 
-    public Charity(int id, int creator_id, @NotBlank @Length(max = 128) String title,
-                   String description, double budget_required, int volunteers_signed_up,
-                   double amount_collected, int volunteers_required) {
+    public Charity(int id, int creatorId, @NotBlank @Length(max = 128) String title,
+                   String description, double budgetRequired, int volunteersSignedUp,
+                   double amountCollected, int volunteersRequired) {
         this.id = id;
-        this.creator_id = creator_id;
+        this.creatorId = creatorId;
         this.title = title;
         this.description = description;
-        this.budget_required = budget_required;
-        this.volunteers_signed_up = volunteers_signed_up;
-        this.amount_collected = amount_collected;
-        this.volunteers_required = volunteers_required;
+        this.budgetRequired = budgetRequired;
+        this.volunteersSignedUp = volunteersSignedUp;
+        this.amountCollected = amountCollected;
+        this.volunteersRequired = volunteersRequired;
     }
 
-    public int getVolunteers_signed_up() {
-        return volunteers_signed_up;
+    public int getVolunteersSignedUp() {
+        return volunteersSignedUp;
     }
 
-    public void setVolunteers_signed_up(int volunteers_signed_up) {
-        this.volunteers_signed_up = volunteers_signed_up;
+    public void setVolunteersSignedUp(int volunteersSignedUp) {
+        this.volunteersSignedUp = volunteersSignedUp;
     }
 
 
@@ -51,12 +51,12 @@ public class Charity {
         this.id = id;
     }
 
-    public int getCreator_id() {
-        return creator_id;
+    public int getCreatorId() {
+        return creatorId;
     }
 
-    public void setCreator_id(int creator_id) {
-        this.creator_id = creator_id;
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
     }
 
     public String getTitle() {
@@ -75,31 +75,31 @@ public class Charity {
         this.description = description;
     }
 
-    public double getBudget_required() {
-        return budget_required;
+    public double getBudgetRequired() {
+        return budgetRequired;
     }
 
-    public void setBudget_required(double budget_required) {
-        this.budget_required = budget_required;
+    public void setBudgetRequired(double budgetRequired) {
+        this.budgetRequired = budgetRequired;
     }
 
-    public double getAmount_collected() {
-        return amount_collected;
+    public double getAmountCollected() {
+        return amountCollected;
     }
 
-    public void setAmount_collected(double amount_collected) {
-        this.amount_collected = amount_collected;
+    public void setAmountCollected(double amountCollected) {
+        this.amountCollected = amountCollected;
     }
 
-    public int getVolunteers_required() {
-        return volunteers_required;
+    public int getVolunteersRequired() {
+        return volunteersRequired;
     }
 
-    public void setVolunteers_required(int volunteers_required) {
-        this.volunteers_required = volunteers_required;
+    public void setVolunteersRequired(int volunteersRequired) {
+        this.volunteersRequired = volunteersRequired;
     }
 
     public void addVoluteer() {
-        volunteers_signed_up +=1;
+        volunteersSignedUp +=1;
     }
 }

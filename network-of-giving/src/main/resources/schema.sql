@@ -35,5 +35,11 @@ CREATE TABLE IF NOT EXISTS Donators(
     donated_money DECIMAL
 )
 
+--CREATE TABLE IF NOT EXISTS USERACTONS(
+--   user_id INT,
+--   description VARCHAR(4096),
+--   date ti
+--)
+
 --ALTER TABLE Charities ADD CONSTRAINT FK_USER_ID FOREIGN
 --KEY (id) REFERENCES Users(id)  ON DELETE CASCADE;

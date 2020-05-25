@@ -185,9 +185,9 @@ public class CharityControllerTest {
     }
 
     @Test
-    public void testGetDonatorsOfExistingCharity() {
+    public void testGetDonationsOfExistingCharity() {
         final String title = "save the world";
-        String getUrl = url + "/" + title + "/donators";
+        String getUrl = url + "/" + title + "/donations";
 
         int sizeOfList = 2;
 
@@ -205,9 +205,9 @@ public class CharityControllerTest {
 
 
     @Test
-    public void testGetDonatorsOfNonExistingCharity() {
+    public void testGetDonationsOfNonExistingCharity() {
         final String title = "save the world today";
-        String getUrl = url + "/" + title + "/donators";
+        String getUrl = url + "/" + title + "/donations";
 
         ResponseEntity<List<User>> responseEntity = restTemplate.exchange(getUrl,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
@@ -246,7 +246,7 @@ public class CharityControllerTest {
 
         final String getUrl = "/api/v1/charities/save the world";
         final Charity actual = restTemplate.getForObject(getUrl, Charity.class);
-        assertEquals(expected.getAmount_collected() + donatedMoney, actual.getAmount_collected(), 0.01);
+        assertEquals(expected.getAmountCollected() + donatedMoney, actual.getAmountCollected(), 0.01);
     }
 
 
@@ -286,7 +286,7 @@ public class CharityControllerTest {
 
         final Charity body = new Charity(1, 1, "save the world", "we are going to clean the world", 10000, 10, 200, 20);
 
-        int expectedVolunteers = body.getVolunteers_signed_up() + 1;
+        int expectedVolunteers = body.getVolunteersSignedUp() + 1;
         ResponseEntity<Void> responseEntity = restTemplate.postForEntity(postUrl, body, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
@@ -294,7 +294,7 @@ public class CharityControllerTest {
 
         final String getUrl = "/api/v1/charities/save the world";
         final Charity actual = restTemplate.getForObject(getUrl, Charity.class);
-        assertEquals(expectedVolunteers, actual.getVolunteers_signed_up());
+        assertEquals(expectedVolunteers, actual.getVolunteersSignedUp());
     }
 
     @Test
@@ -305,7 +305,7 @@ public class CharityControllerTest {
 
         final Charity body = new Charity(1, 1, "save the world", "we are going to clean the world", 10000, 10, 200, 20);
 
-        int expectedVolunteers = body.getVolunteers_signed_up() + 1;
+        int expectedVolunteers = body.getVolunteersSignedUp() + 1;
         ResponseEntity<Void> responseEntity = restTemplate.postForEntity(postUrl, body, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
@@ -321,7 +321,7 @@ public class CharityControllerTest {
 
         final Charity body = new Charity(1, 1, "today", "we are going to clean the world", 10000, 10, 200, 20);
 
-        int expectedVolunteers = body.getVolunteers_signed_up() + 1;
+        int expectedVolunteers = body.getVolunteersSignedUp() + 1;
         ResponseEntity<Void> responseEntity = restTemplate.postForEntity(postUrl, body, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 

@@ -1,19 +1,18 @@
 package com.vmware.talentboost.networkofgiving.util.maprow;
 
-import com.vmware.talentboost.networkofgiving.models.Donator;
-import com.vmware.talentboost.networkofgiving.models.User;
+import com.vmware.talentboost.networkofgiving.models.Donation;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DonatorMapRower implements RowMapper<Donator> {
+public class DonatorMapRower implements RowMapper<Donation> {
 
     @Override
-    public Donator mapRow(ResultSet resultSet, int i) throws SQLException {
-        Donator result = new Donator();
-        result.setCharity_id(resultSet.getInt("charity_id"));
-        result.setUser_id(resultSet.getInt("user_id"));
+    public Donation mapRow(ResultSet resultSet, int i) throws SQLException {
+        Donation result = new Donation();
+        result.setCharityId(resultSet.getInt("charity_id"));
+        result.setUserId(resultSet.getInt("user_id"));
         result.setMoney(resultSet.getDouble("donated_money"));
 
         return result;

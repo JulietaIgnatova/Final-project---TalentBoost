@@ -57,9 +57,9 @@ public class CharityController {
         return charityService.getParticipantsForCharity(title);
     }
 
-    @GetMapping("/{title}/donators")
-    public List<User> getDonatorsForCharity(@PathVariable("title") String title) {
-        return charityService.getDonatorsForCharity(title);
+    @GetMapping("/{title}/donations")
+    public List<User> getDonationsForCharity(@PathVariable("title") String title) {
+        return charityService.getDonationsForCharity(title);
     }
 
     @GetMapping("/{title}/creator")

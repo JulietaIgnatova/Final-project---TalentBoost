@@ -1,22 +1,22 @@
 package com.vmware.talentboost.networkofgiving.models;
 
 public class Participant {
-    int user_id;
-    int charity_id;
+    private int userId;
+    private int charityId;
 
-    public int getCharity_id() {
-        return charity_id;
+    public int getCharityId() {
+        return charityId;
     }
 
-    public void setCharity_id(int charity_id) {
-        this.charity_id = charity_id;
+    public void setCharityId(int charityId) {
+        this.charityId = charityId;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

@@ -20,7 +20,7 @@ public interface ICharityRepository {
 
     List<User> getParticipantsForCharity(String title);
 
-    List<User> getDonatorsForCharity(String title);
+    List<User> getDonationsForCharity(String title);
 
     User getCreatorForCharity(String title);
 
