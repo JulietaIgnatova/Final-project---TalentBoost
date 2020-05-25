@@ -2,6 +2,8 @@ package com.vmware.talentboost.networkofgiving.models;
 
 public class Donator {
     int user_id;
+    int charity_id;
+    double money;
 
     public int getUser_id() {
         return user_id;
@@ -27,7 +29,5 @@ public class Donator {
         this.money = money;
     }
 
-    int charity_id;
-    double money;
 
 }

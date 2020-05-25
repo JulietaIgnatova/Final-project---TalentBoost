@@ -1,7 +1,5 @@
 package com.vmware.talentboost.networkofgiving.repositories.user;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
-
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.util.maprow.CharityMapRower;
@@ -10,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Repository
 public class JdbcUserRepository implements IUserRepository {

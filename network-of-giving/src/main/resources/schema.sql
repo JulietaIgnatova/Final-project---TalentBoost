@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Users(
 CREATE TABLE IF NOT EXISTS Charities(
     id INT IDENTITY PRIMARY KEY,
     creator_id INT NOT NULL,
-    title VARCHAR(128) NOT NULL,
+    title VARCHAR(128) NOT NULL UNIQUE,
     description VARCHAR(4096) NOT NULL,
     budget_required DECIMAL  NOT NULL,
     amount_collected DECIMAL NOT NULL ,
@@ -28,6 +28,12 @@ CREATE TABLE IF NOT EXISTS Participants(
     user_id INT,
     charity_id INT
 );
+
+CREATE TABLE IF NOT EXISTS Donators(
+    user_id INT,
+    charity_id INT,
+    donated_money DECIMAL
+)
 
 --ALTER TABLE Charities ADD CONSTRAINT FK_USER_ID FOREIGN
 --KEY (id) REFERENCES Users(id)  ON DELETE CASCADE;

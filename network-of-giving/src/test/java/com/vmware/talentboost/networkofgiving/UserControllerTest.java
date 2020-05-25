@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 @ActiveProfiles("test")
 @SqlGroup({
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:database/seed.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:database/purge.sql") })
+        @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:database/purge.sql")})
 public class UserControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
@@ -133,6 +133,18 @@ public class UserControllerTest {
 
 
     @Test
+    public void testDeleteNonExistingUser() {
+        final String username = "mariana";
+        final String deleteUrl = url + "/" + username;
+
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, null, Void.class);
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+
+        assertEquals(HttpStatus.BAD_REQUEST, responseStatus);
+    }
+
+
+    @Test
     public void testDeleteExistingUser() {
         final String username = "martin";
         final String deleteUrl = url + "/" + username;
@@ -144,13 +156,11 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetAllParticipatedCharities() {
-        final String username = "maria";
-
+    public void testGetAllParticipatedCharitiesOfExistingUser() {
         int sizeOfList = 2;
-        String url = "/api/v1/users/maria/charities/participated";
+        String getUrl = url+"/maria/charities/participated";
 
-        ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(url,
+        ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(getUrl,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<Charity>>() {
                 });
         HttpStatus responseStatus = responseEntity.getStatusCode();
@@ -164,5 +174,76 @@ public class UserControllerTest {
 
     }
 
+    @Test
+    public void testGetAllParticipatedCharitiesOfNonExistingUser() {
+        String getUrl = url+"/mariana/charities/participated";
 
+        ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(getUrl,
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<Charity>>() {
+                });
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+
+        assertEquals(HttpStatus.BAD_REQUEST, responseStatus);
+    }
+
+//
+    @Test
+    public void testGetAllDonatedCharitiesOfExistingUser() {
+        String getUrl = url+"/maria/charities/donated";
+        int sizeOfList = 2;
+
+        ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(url,
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<Charity>>() {
+                });
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        final List<Charity> actual = responseEntity.getBody();
+
+        assertEquals(HttpStatus.OK, responseStatus);
+        assertNotNull(actual);
+        assertFalse(actual.isEmpty());
+        assertEquals(sizeOfList, actual.size());
+    }
+
+    @Test
+    public void testGetAllDonatedCharitiesOfNonExistingUser() {
+        String getUrl = url+"/mariana/charities/donated";
+
+        ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(getUrl,
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<Charity>>() {
+                });
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+
+        assertEquals(HttpStatus.BAD_REQUEST, responseStatus);
+    }
+
+    @Test
+    public void testGetAllCreatedCharitiesOfExistingUser() {
+        String getUrl = url+"/maria/charities/created";
+
+        int sizeOfList = 1;
+
+        ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(getUrl,
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<Charity>>() {
+                });
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+        final List<Charity> actual = responseEntity.getBody();
+
+        assertEquals(HttpStatus.OK, responseStatus);
+        assertNotNull(actual);
+        assertFalse(actual.isEmpty());
+        assertEquals(sizeOfList, actual.size());
+    }
+
+    @Test
+    public void testGetAllCreatedCharitiesOfNonExistingUser() {
+        String getUrl = url+"/mariana/charities/created";
+
+
+        ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(getUrl,
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<Charity>>() {
+                });
+        HttpStatus responseStatus = responseEntity.getStatusCode();
+
+        assertEquals(HttpStatus.BAD_REQUEST, responseStatus);
+    }
 }

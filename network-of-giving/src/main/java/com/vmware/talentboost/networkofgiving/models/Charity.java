@@ -3,7 +3,6 @@ package com.vmware.talentboost.networkofgiving.models;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
 
 public class Charity {
     private int id;
@@ -19,7 +18,8 @@ public class Charity {
     private double amount_collected;
     private int volunteers_required;
 
-    public Charity(){}
+    public Charity() {
+    }
 
     public Charity(int id, int creator_id, @NotBlank @Length(max = 128) String title,
                    String description, double budget_required, int volunteers_signed_up,
@@ -41,7 +41,6 @@ public class Charity {
     public void setVolunteers_signed_up(int volunteers_signed_up) {
         this.volunteers_signed_up = volunteers_signed_up;
     }
-
 
 
     public int getId() {
@@ -100,4 +99,7 @@ public class Charity {
         this.volunteers_required = volunteers_required;
     }
 
+    public void addVoluteer() {
+        volunteers_signed_up +=1;
+    }
 }

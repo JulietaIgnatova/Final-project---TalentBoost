@@ -79,7 +79,31 @@ public class CharityService implements ICharityService {
 
     @Override
     public void donateMoneyForCharity(Charity charity, int userId, double money) {
-        repository.updateCharity(charity.getTitle(),charity);
-        //repository.addDonation(userId,charity.getId(),money);
+        double newCollectedMoney = charity.getAmount_collected() + money;
+        if (!repository.checkCharity(charity.getTitle())) {
+            throw new IllegalArgumentException("Chariry doesn't exists.");
+        }
+
+        if (newCollectedMoney > charity.getBudget_required()) {
+            throw new IllegalArgumentException("Too much money.Change the donation");
+            //think for better exception
+        }
+
+        repository.donateMoneyForCharity(charity, userId, money);
+    }
+
+    @Override
+    public void participateInCharity(Charity charity, int userId) {
+        int newVolunteersCount = charity.getVolunteers_signed_up() + 1;
+
+        if (!repository.checkCharity(charity.getTitle())) {
+            throw new IllegalArgumentException("Chariry doesn't exists.");
+        }
+
+        if (newVolunteersCount > charity.getVolunteers_required()) {
+            throw new IllegalArgumentException("Too much volunteers");
+            //think for better exception
+        }
+        repository.participateInCharity(charity, userId);
     }
 }

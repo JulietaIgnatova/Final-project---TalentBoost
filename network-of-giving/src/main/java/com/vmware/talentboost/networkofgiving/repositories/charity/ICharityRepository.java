@@ -24,4 +24,7 @@ public interface ICharityRepository {
 
     User getCreatorForCharity(String title);
 
+    void donateMoneyForCharity(Charity charity, int userId, double money);
+
+    public void participateInCharity(Charity charity, int userId);
 }

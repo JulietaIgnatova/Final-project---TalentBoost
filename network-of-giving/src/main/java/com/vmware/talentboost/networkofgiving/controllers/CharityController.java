@@ -3,7 +3,6 @@ package com.vmware.talentboost.networkofgiving.controllers;
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.services.charity.ICharityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +18,6 @@ import java.util.List;
 public class CharityController {
     private final ICharityService charityService;
 
-    @Autowired
     public CharityController(ICharityService charityService) {
         this.charityService = charityService;
     }
@@ -69,13 +67,17 @@ public class CharityController {
         return charityService.getCreatorForCharity(title);
     }
 
-
-    @GetMapping("/donate/{userId}")
+//
+    @PostMapping(path = "/donate/{user_id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void donateMoneyForCharity(@RequestBody @Valid Charity charity,
-                                      @RequestParam(name = "money", required = true) double money,
-                                      @PathVariable("userId") int userId) {
+    public void donateMoneyForCharity(@RequestBody @Valid Charity charity, @RequestParam(name = "money", required = true) double money, @PathVariable("user_id") int userId) {
+        charityService.donateMoneyForCharity(charity, userId, money);
+    }
 
+    @PostMapping(path = "/participate/{user_id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void participateInCharity(@RequestBody @Valid Charity charity, @PathVariable("user_id") int userId) {
+        charityService.participateInCharity(charity,userId);
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)

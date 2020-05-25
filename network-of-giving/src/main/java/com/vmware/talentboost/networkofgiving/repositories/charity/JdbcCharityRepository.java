@@ -4,6 +4,7 @@ import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.util.maprow.CharityMapRower;
 import com.vmware.talentboost.networkofgiving.util.maprow.DonatorMapRower;
+import com.vmware.talentboost.networkofgiving.util.maprow.ParticipantMapRower;
 import com.vmware.talentboost.networkofgiving.util.maprow.UserMapRower;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -82,15 +83,45 @@ public class JdbcCharityRepository implements ICharityRepository {
                 "(SELECT creator_id FROM CHARITIES WHERE title = ?)", new UserMapRower(), title);
     }
 
-    private void addDonater(int userId, int chariryId, double money){
-         jdbcTemplate.update("INSERT INTO DONATORS(user_id, charity_id, donated_money) VALUES(?, ?, ?)",userId,chariryId,money );
+    @Override
+    public void donateMoneyForCharity(Charity charity, int userId, double money) {
+        if (checkIfAlreadyDonated(userId, charity.getId())) {
+            updateDonation(userId, charity.getId(), money);
+        } else {
+            addDonater(userId, charity.getId(), money);
+        }
+        charity.setAmount_collected(money + charity.getAmount_collected());
+        updateCharity(charity.getTitle(), charity);
     }
 
-    private boolean checkIfAlreadyDonated(int userId, int charityId){
-        return !isEmpty(jdbcTemplate.query("SELECT * FROM DONATORS WHERE user_id = ? AND charity_id =?", new DonatorMapRower(),userId,charityId));
+    @Override
+    public void participateInCharity(Charity charity, int userId) {
+        if(checkIfAlreadyParticipate(userId,charity.getId())) {
+            throw new IllegalArgumentException("Already participated in this charity.");
+        }
+        addParticipant(userId,charity.getId());
+        charity.addVoluteer();
+        System.out.println("sssssa");
+        updateCharity(charity.getTitle(),charity);
     }
 
-    private void updateDonator(int userId, int charityId){
-       // return jdbcTemplate.update("UPDATE DONATORS SET donated_money = donated_money + ");
+    private void addDonater(int userId, int chariryId, double money) {
+        jdbcTemplate.update("INSERT INTO DONATORS(user_id, charity_id, donated_money) VALUES(?, ?, ?)", userId, chariryId, money);
+    }
+
+    private boolean checkIfAlreadyDonated(int userId, int charityId) {
+        return !isEmpty(jdbcTemplate.query("SELECT * FROM DONATORS WHERE user_id = ? AND charity_id =?", new DonatorMapRower(), userId, charityId));
+    }
+
+    private void updateDonation(int userId, int charityId, double money) {
+        jdbcTemplate.update("UPDATE DONATORS SET donated_money = donated_money + ?", money);
+    }
+
+    private boolean checkIfAlreadyParticipate(int userId, int charityId) {
+        return !isEmpty(jdbcTemplate.query("SELECT * FROM PARTICIPANTS WHERE user_id = ? AND charity_id =?", new ParticipantMapRower(), userId, charityId));
+    }
+
+    private void addParticipant(int userId, int chariryId){
+        jdbcTemplate.update("INSERT INTO PARTICIPANTS(user_id, charity_id) VALUES(?,?)",userId,chariryId);
     }
 }

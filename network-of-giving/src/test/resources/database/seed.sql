@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Users(
 CREATE TABLE IF NOT EXISTS Charities(
     id INT IDENTITY PRIMARY KEY,
     creator_id INT NOT NULL,
-    title VARCHAR(128) NOT NULL,
+    title VARCHAR(128) NOT NULL UNIQUE,
     description VARCHAR(4096) NOT NULL,
     budget_required DECIMAL  NOT NULL,
     amount_collected DECIMAL NOT NULL ,
@@ -23,6 +23,11 @@ CREATE TABLE IF NOT EXISTS Participants(
     charity_id INT
 );
 
+CREATE TABLE IF NOT EXISTS Donators(
+    user_id INT,
+    charity_id INT,
+    donated_money DECIMAL
+);
 
 INSERT INTO Users (name,username,age,gender,location)
 VALUES
@@ -37,4 +42,11 @@ VALUES
 INSERT INTO Participants
 values
 (1,1),
-(1,2);
+(1,2),
+(2,2);
+
+INSERT INTO Donators
+values
+(1,1,200.0),
+(1,2,300.0),
+(2,1,350);
