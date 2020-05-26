@@ -1,0 +1,40 @@
+<form clrForm [formGroup]="charityForm" (ngSubmit)="submitCharity()">
+
+    <clr-input-container>
+        <label>For now</label>
+        <input clrInput type="text" formControlName="creatorId" />
+        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+        <label>Title</label>
+        <input clrInput type="text" formControlName="title" />
+        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+        <label>Description</label>
+        <input clrInput type="textbox" formControlName="description" />
+        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+        <label>Budget required</label>
+        <input clrInput type="text" formControlName="budgetRequired" />
+        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+        <label>Volunteers required</label>
+        <input clrInput type="text" formControlName="volunteersRequired" />
+        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
+        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+    </clr-input-container>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    
+</form>

@@ -1,0 +1,76 @@
+<p>register works!</p>
+<header class="header-6">
+    <div class="branding">
+        <a href="javascript://" class="nav-link">
+         <clr-icon shape="vm-bug"></clr-icon> 
+            <!-- <img src="images/Roses.png" height="300px" width="100%" /> -->
+            <span class="title">Network for Giving</span>
+        </a>
+    </div>
+    <div class="header-actions">
+        <a href="javascript://" class="nav-link nav-icon-text">
+            <div class="buttons">
+               <button class="btn btn-primary">Login</button>
+               <button class="btn btn-primary">Register</button>
+            </div>
+        </a>
+    </div>
+  </header>
+
+  <div class="login-wrapper">
+    <form class="login">
+       
+        <div class="login-group">
+            
+           <clr-input-container>
+            <label class="clr-sr-only">Username</label>
+            <input type="text" name="username" clrInput placeholder="Username" required minlength="5" />
+            <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+            <clr-control-error *clrIfError="'minlength'">It must be at least 5 characters!</clr-control-error>
+           </clr-input-container>
+
+            <clr-password-container>
+                  <input placeholder="Password" clrPassword  name="password" required minlength="8" />
+                  <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+                  <clr-control-error *clrIfError="'minlength'">It must be at least 8 characters!</clr-control-error>
+            </clr-password-container>
+
+            <clr-input-container>
+                <label class="clr-sr-only">Name</label>
+                <input type="text" name="name" clrInput placeholder="Name" required minlength="2"  />
+                <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+                <clr-control-error *clrIfError="'minlength'"></clr-control-error>
+            </clr-input-container>
+
+            <clr-input-container>
+                <label class="clr-sr-only">Age</label>
+                <input type="text" name="age" clrInput placeholder="Age"  />
+                <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+            </clr-input-container>
+                  
+              <clr-radio-container clrInline>
+                    <label>Gender</label>
+                    <clr-radio-wrapper>
+                      <input type="radio" clrRadio name="options" required value="option1" />
+                      <label>Male</label>
+                    </clr-radio-wrapper>
+                    <clr-radio-wrapper>
+                      <input type="radio" clrRadio name="options" required value="option2" />
+                      <label>Female</label>
+                    </clr-radio-wrapper>
+        
+                </clr-radio-container>
+              
+                <clr-input-container>
+                    <label class="clr-sr-only">Location</label>
+                    <input type="text" name="location" clrInput placeholder="Location"  />
+                    <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+                </clr-input-container>
+            <!-- <div class="error active">
+                Invalid user name or password
+            </div> -->
+            <button type="submit" class="btn btn-primary">REGISTER</button>
+        
+        </div>
+    </form>
+</div>

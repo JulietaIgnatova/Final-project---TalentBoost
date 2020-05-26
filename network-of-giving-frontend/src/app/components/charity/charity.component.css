@@ -1,0 +1,48 @@
+.card-block{
+    height: 300px;
+}
+
+.clr-row {
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.header-6 img {
+    width: 30px;
+    height: 30px;
+   
+}
+
+.btn-primary{
+  position: relative;
+  bottom: 12px;
+  border: 3px solid #73AD21;
+}
+
+/* for search bar*/
+.search-container {
+    float: right;
+  }
+
+  .search-container input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+  }
+  
+  .search-container button {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .search-container button:hover {
+    background: grey;
+  }
+  

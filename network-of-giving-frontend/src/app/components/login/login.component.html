@@ -1,0 +1,44 @@
+<header class="header-6">
+    <div class="branding">
+        <a href="javascript://" class="nav-link">
+         <clr-icon shape="vm-bug"></clr-icon> 
+            <!-- <img src="images/Roses.png" height="300px" width="100%" /> -->
+            <span class="title">Network for Giving</span>
+        </a>
+    </div>
+    <div class="header-actions">
+        <a href="javascript://" class="nav-link nav-icon-text">
+            <div class="buttons">
+               <!-- <button class="btn btn-primary">Login</button> -->
+               <button class="btn btn-primary">Register</button>
+            </div>
+        </a>
+    </div>
+  </header>
+  
+  
+    <div class="login-wrapper">
+      <form class="login" (ngSubmit)="login()">
+         
+          <div class="login-group">
+              
+             <clr-input-container>
+              <label class="clr-sr-only">Username</label>
+              <input type="text" name="username" clrInput placeholder="Username" required minlength="5" />
+              <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+              <clr-control-error *clrIfError="'minlength'">It must be at least 5 characters!</clr-control-error>
+             </clr-input-container>
+  
+              <clr-password-container>
+                    <input placeholder="Password" clrPassword  name="password" required minlength="8" />
+                    <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+                    <clr-control-error *clrIfError="'minlength'">It must be at least 8 characters!</clr-control-error>
+              </clr-password-container>
+            
+              <!-- <div class="error active">
+                  Invalid user name or password
+              </div> -->
+              <button type="submit" class="btn btn-primary">LOGIN</button>
+          </div>
+      </form>
+  </div>

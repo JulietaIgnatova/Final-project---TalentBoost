@@ -67,7 +67,7 @@ public class CharityController {
         return charityService.getCreatorForCharity(title);
     }
 
-//
+
     @PostMapping(path = "/donate/{user_id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void donateMoneyForCharity(@RequestBody @Valid Charity charity, @RequestParam(name = "money", required = true) double money, @PathVariable("user_id") int userId) {
