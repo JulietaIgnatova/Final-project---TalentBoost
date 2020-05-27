@@ -4,14 +4,32 @@
     </div>
     <div class="card" >
         <div class="card-header">
-            {{charity.title}}
+           <h1> {{charity.title}}</h1>
         </div>
-    
-        <div class="card-block">
-            <div class="card-text" >
+
+        <div class="flex-wrapper">
+            <img src="../../assets/images/photo.png" >
+   
+           <form>
+           <div class="card-block">
+            <!-- <div class="card-img">
+                <img class="img-responsive" src="../../assets/images/photo.png" width="20" height="10">
+            </div> -->
+
+           
+               <div class="card-text1" >
+                  <h4> {{"Description:"}}</h4> <br>
                     {{charity.description}}
 
-            </div>
-        </div>
+               </div>
+               <div class="card-text" >       
+                {{"Amount required:"}}  {{charity.budgetRequired}}<br>
+                {{"Amount collected:"}} {{charity.amountCollected}}
+              </div>
+
+             </div>
+        </form>
+    </div>
     </div>
 </div>
+

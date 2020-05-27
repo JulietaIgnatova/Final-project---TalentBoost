@@ -3,6 +3,7 @@ import {CharityService } from '../../services/charity.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'app-create-charity',
   templateUrl: './create-charity.component.html',
@@ -11,6 +12,7 @@ import { Observable } from 'rxjs';
 export class CreateCharityComponent implements OnInit {
   charityForm: FormGroup;
   validMessage: string = "";
+  selectedFile: File;
 
   constructor(private charityService: CharityService) { }
 
@@ -27,9 +29,15 @@ export class CreateCharityComponent implements OnInit {
   submitCharity() {
     if(this.charityForm.valid){
       this.validMessage = "Your charity form has been submitted. Thank you!"
-      this.charityService.createCharity(this.charityForm.value).subscribe(
+      const submitFormData = new FormData;
+      submitFormData.append('imageFile', this.selectedFile);
+      let body = JSON.stringify(this.charityForm.value);
+      submitFormData.append('body',body);
+    
+      this.charityService.createCharityWithImage(submitFormData).subscribe(
         date => {
           this.charityForm.reset();
+          this.selectedFile = null;
           return true;
         },
         error => {
@@ -39,6 +47,10 @@ export class CreateCharityComponent implements OnInit {
     } else {
       this.validMessage = "Please fill out the form before submitting!"
     }
+  }
+
+  processFile(imageInput: any){
+    this.selectedFile = imageInput.target.files[0];
   }
 
 }

@@ -26,5 +26,8 @@ export class CharityService {
     return this.http.post('http://localhost:8080/api/v1/charities/', body, httpOptions)
   }
 
+  createCharityWithImage(charityFormData){
+    return this.http.post<any>('http://localhost:8080/api/v1/charities/',charityFormData);
+  }
 
 }

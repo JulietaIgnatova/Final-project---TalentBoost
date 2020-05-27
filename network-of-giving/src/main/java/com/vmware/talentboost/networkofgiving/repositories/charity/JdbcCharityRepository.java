@@ -41,9 +41,9 @@ public class JdbcCharityRepository implements ICharityRepository {
 
     @Override
     public void addCharity(Charity charity) {
-        jdbcTemplate.update("INSERT INTO CHARITIES(creator_id, title, description, budget_required, amount_collected, volunteers_required, volunteers_signed_up)" +
-                        " VALUES (?, ?, ?, ?, ?, ?, ?) ", charity.getCreatorId(), charity.getTitle(), charity.getDescription(),
-                charity.getBudgetRequired(), charity.getAmountCollected(), charity.getVolunteersRequired(), charity.getVolunteersSignedUp());
+        jdbcTemplate.update("INSERT INTO CHARITIES(creator_id, title, description, budget_required, amount_collected, volunteers_required, volunteers_signed_up,image)" +
+                        " VALUES (?, ?, ?, ?, ?, ?, ?,?) ", charity.getCreatorId(), charity.getTitle(), charity.getDescription(),
+                charity.getBudgetRequired(), charity.getAmountCollected(), charity.getVolunteersRequired(), charity.getVolunteersSignedUp(),charity.getImage());
 
     }
 

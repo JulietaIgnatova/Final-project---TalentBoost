@@ -1,10 +1,12 @@
 .card-block{
-    height: 300px;
+    height: 150px;
 }
 
 .clr-row {
-    padding-right: 50px;
-    padding-left: 50px;
+    padding-right: 200px;
+    padding-left: 220px;
+    padding-top: 80px;
+    padding-bottom: 50px;
 }
 
 .header-6 img {
@@ -46,3 +48,25 @@
     background: grey;
   }
   
+  .card-text{
+    color: blue;
+  }
+  
+  .card-header{
+    font-weight: bold;
+
+  }
+  .card-text1 {
+    color: black;
+  }
+
+  p {
+    width:  250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-img{
+    height: 200px;
+    width: 200px;
+  }

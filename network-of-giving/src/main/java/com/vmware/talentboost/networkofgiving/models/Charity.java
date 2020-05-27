@@ -17,6 +17,26 @@ public class Charity {
     private int volunteersSignedUp;
     private double amountCollected;
     private int volunteersRequired;
+    private byte[] image;
+    private String imageBase64;
+
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageBase64() {
+        return imageBase64;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
+    }
+
 
     public Charity() {
     }
@@ -100,6 +120,6 @@ public class Charity {
     }
 
     public void addVoluteer() {
-        volunteersSignedUp +=1;
+        volunteersSignedUp += 1;
     }
 }

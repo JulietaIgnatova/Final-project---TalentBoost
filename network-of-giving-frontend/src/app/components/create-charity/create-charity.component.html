@@ -1,40 +1,49 @@
+
 <form clrForm [formGroup]="charityForm" (ngSubmit)="submitCharity()">
 
     <clr-input-container>
         <label>For now</label>
         <input clrInput type="text" formControlName="creatorId" />
-        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
         <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
     </clr-input-container>
 
     <clr-input-container>
         <label>Title</label>
         <input clrInput type="text" formControlName="title" />
-        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
         <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
     </clr-input-container>
 
-    <clr-input-container>
+     <clr-textarea-container>
         <label>Description</label>
-        <input clrInput type="textbox" formControlName="description" />
-        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
-        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
-    </clr-input-container>
+         <!-- <textarea clrTextarea name="description" rows="6"></textarea> -->
+         <!-- <input clrInput type="text" formControlName="description"  /> -->
+       
+        <textarea clrTextarea type="text" formControlName="description"></textarea>
+    </clr-textarea-container>
 
     <clr-input-container>
         <label>Budget required</label>
         <input clrInput type="text" formControlName="budgetRequired" />
-        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
         <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
     </clr-input-container>
 
     <clr-input-container>
         <label>Volunteers required</label>
         <input clrInput type="text" formControlName="volunteersRequired" />
-        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>
         <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
     </clr-input-container>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">   
+                <div class="form-group">
+                    <input type="file" accept="image/*" (change)="processFile($event)" />
+                </div>
+               
+            </div>
+        </div>
+    </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" >Create</button>
     
 </form>

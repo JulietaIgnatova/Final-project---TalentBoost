@@ -26,40 +26,30 @@
     </div>
 </header>
 
-<!-- <div class="search"> 
-    <label for="search_input">
-        <input id="search_input" type="search" placeholder="Search for keywords..."> 
-        <clr-icon shape="search"></clr-icon>
-    </label>
-</div> -->
-
-<!-- 
-<div class="col-xs-6" >
-    <div class="right-inner-addon">
-      <i class="icon-search"></i>
-      <clr-icon shape="search"></clr-icon>
-      <input type="search" class="form-control" placeholder="Search" />
-    </div>
-  </div> -->
-
-
 <div class="clr-row">
     <div class="clr-col-sm-4 clr-col-md-4" *ngFor='let charity of charities'>
             <div class="card" >
                 <div class="card-header">
-                    {{charity.title}}
+                {{charity.title}}
                 </div>
 
-                <!-- <div class="card-img">
-                    <img src="...">
-                </div> -->
+                <div class="card-img">
+                    <img [src]="'data:image/png;base64,' + charity.imageBase64" alt=""/>
+                </div>
             
                 <div class="card-block">
-                    <div class="card-text" >
-                            {{charity.description}}
-
+                    <div class="card-text1" >
+                        <p> {{charity.description}} </p>
+                           
                     </div>
+
+                    <div class="card-text" >       
+                      {{"Amount required:"}}  {{charity.budgetRequired}}<br>
+                      {{"Amount collected:"}} {{charity.amountCollected}}
+                    </div>
+
                 </div>
+                
                 <div class="card-footer">
                     <a [routerLink]="['/charity/view', charity.title]" class="btn btn-sm btn-link">See more</a>
                </div>
@@ -67,25 +57,3 @@
             
     </div>
 </div>
-
-<!-- 
- <p>charity works!</p>
-<div class="clr-col-9 clr-col-sm-3">  
-<div class="card">
-    <h4 class="card-title">Title</h4>
-    <div class="card-img">
-        <img src="...">
-    </div>
-    <div class="card-block"> 
-        <h4>Description</h4>  
-        <p class="card-text">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, aut.
-        Nihil nemo, necessitatibus earum.
-        </p>
-    </div>
-    <div class="card-footer">
-        <a href="..." class="btn btn-sm btn-link">See more</a>
-
-   </div>
-</div> 
-</div> -->

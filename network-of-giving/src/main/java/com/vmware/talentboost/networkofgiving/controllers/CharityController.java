@@ -1,5 +1,6 @@
 package com.vmware.talentboost.networkofgiving.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.services.charity.ICharityService;
@@ -7,10 +8,13 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(maxAge = 3600)
 @RestController
@@ -32,12 +36,25 @@ public class CharityController {
         return charityService.getAllCharities();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addCharity(@RequestBody @Valid Charity charity) {
+    public void addCharity(@RequestParam("imageFile") MultipartFile imageFile,
+                           @RequestParam("body") String body) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Charity charity = objectMapper.readValue(body, Charity.class);
+        if (imageFile != null) {
+            charity.setImage(imageFile.getBytes());
+        }
         charityService.addCharity(charity);
     }
 
+//    public List<Charity> getFiteredCharitiesByTitle(String filter) {
+//        return getAllCharities().stream().filter(
+//                charity -> {
+//                    return charity.getName().toLowerCase().contains(filter.toLowerCase());
+//                }).collect(Collectors.toList());
+//    }
+//
 
     @PutMapping(path = "/{title}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -77,7 +94,7 @@ public class CharityController {
     @PostMapping(path = "/participate/{user_id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void participateInCharity(@RequestBody @Valid Charity charity, @PathVariable("user_id") int userId) {
-        charityService.participateInCharity(charity,userId);
+        charityService.participateInCharity(charity, userId);
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
