@@ -1,5 +1,7 @@
 package com.vmware.talentboost.networkofgiving;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import org.junit.Test;
@@ -13,6 +15,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 
@@ -56,7 +60,7 @@ public class CharityControllerTest {
         ResponseEntity<Charity> responseEntity = restTemplate.getForEntity(getUrl, Charity.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
         final Charity charity = responseEntity.getBody();
-
+        //System.out.println(charity.getTitle());
         assertEquals(HttpStatus.OK, responseStatus);
         assertEquals(title, charity.getTitle());
     }
@@ -74,10 +78,22 @@ public class CharityControllerTest {
     }
 
     @Test
-    public void testAddCharityWithUniqueTitle() {
+    public void testAddCharityWithUniqueTitle() throws JsonProcessingException {
         final Charity expected = new Charity(1, 1, "clean the world", "we are going to clean the world", 10000, 200, 20, 10);
 
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(url, expected, Void.class);
+        ObjectMapper mapper = new ObjectMapper();
+        String charityAsJson = mapper.writeValueAsString(expected);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("imageFile", null);
+        body.add("body", charityAsJson);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(url, requestEntity, Void.class);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals(HttpStatus.CREATED, responseStatus);
@@ -92,10 +108,23 @@ public class CharityControllerTest {
     }
 
     @Test
-    public void testAddCharityWithExistingTitle() {
+    public void testAddCharityWithExistingTitle() throws JsonProcessingException {
         final Charity expected = new Charity(1, 1, "save the world", "we are going to clean the world", 10000, 200, 20, 10);
 
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(url, expected, Void.class);
+        ObjectMapper mapper = new ObjectMapper();
+        String charityAsJson = mapper.writeValueAsString(expected);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("imageFile", null);
+        body.add("body", charityAsJson);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(url, requestEntity, Void.class);
+
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.BAD_REQUEST, responseStatus);

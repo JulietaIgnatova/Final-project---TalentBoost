@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS Charities(
     budget_required DECIMAL  NOT NULL,
     amount_collected DECIMAL NOT NULL ,
     volunteers_required INT NOT NULL,
-    volunteers_signed_up INT NOT NULL
+    volunteers_signed_up INT NOT NULL,
+    image BYTEA
 );
 
 CREATE TABLE IF NOT EXISTS Participants(

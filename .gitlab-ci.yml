@@ -1,14 +1,21 @@
-image: maven:3-jdk-9
+mage: maven:3-jdk-9
 
 stages:
     - build
+    - testing
 
 before_script:
-  - echo "Start of CI/CD Pipeline"
+  - echo "Starting NetworkOfGiving CI/CD pipeline"
 
 buildPrj:
     stage: build
     script: 
+        - cd network-of-giving
+        - mvn clean compile
+
+testingPrj:
+    stage: testing
+    script:
         - cd network-of-giving
         - mvn clean install
 

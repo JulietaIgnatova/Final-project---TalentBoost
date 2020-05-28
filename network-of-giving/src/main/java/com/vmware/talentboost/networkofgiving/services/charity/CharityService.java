@@ -106,4 +106,12 @@ public class CharityService implements ICharityService {
         }
         repository.participateInCharity(charity, userId);
     }
+
+    //    public List<Charity> getFiteredCharitiesByTitle(String filter) {
+//        return getAllCharities().stream().filter(
+//                charity -> {
+//                    return charity.getName().toLowerCase().contains(filter.toLowerCase());
+//                }).collect(Collectors.toList());
+//    }
+//
 }

@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @CrossOrigin(maxAge = 3600)
 @RestController
@@ -38,23 +38,17 @@ public class CharityController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addCharity(@RequestParam("imageFile") MultipartFile imageFile,
+    public void addCharity(@RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
                            @RequestParam("body") String body) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Charity charity = objectMapper.readValue(body, Charity.class);
         if (imageFile != null) {
             charity.setImage(imageFile.getBytes());
         }
+
         charityService.addCharity(charity);
     }
 
-//    public List<Charity> getFiteredCharitiesByTitle(String filter) {
-//        return getAllCharities().stream().filter(
-//                charity -> {
-//                    return charity.getName().toLowerCase().contains(filter.toLowerCase());
-//                }).collect(Collectors.toList());
-//    }
-//
 
     @PutMapping(path = "/{title}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)

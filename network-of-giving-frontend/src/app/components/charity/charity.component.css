@@ -50,11 +50,12 @@
   
   .card-text{
     color: blue;
+    overflow: auto;
   }
   
   .card-header{
     font-weight: bold;
-
+    overflow: auto;
   }
   .card-text1 {
     color: black;
@@ -67,6 +68,16 @@
     text-overflow: ellipsis;
   }
   .card-img{
-    height: 200px;
-    width: 200px;
+    height: 300px;
+    width: 323px; 
+    overflow: auto;
+  }
+  .card{
+    overflow: auto;
+    resize: both;
+  }
+
+  .card-text{
+    bottom: 8px;
+    left: 16px;
   }
