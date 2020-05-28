@@ -1,4 +1,4 @@
-mage: maven:3-jdk-9
+image: maven:3-jdk-9
 
 stages:
     - build
