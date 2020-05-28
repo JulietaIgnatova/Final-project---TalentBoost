@@ -3,50 +3,16 @@
       <a class="btn btn=primary" (click)="onBack()">Back to List</a>
     </div>
 </div>
-    <!-- <div class="card" >
-        <div class="card-header">
-           <h1> {{charity.title}}</h1>
-        </div>
+    
 
-        <div class="flex-wrapper">
-            <img src="../../assets/images/photo.png" >
-   
-           <form>
-           <div class="card-block">
-            <div class="card-img">
-                <img class="img-responsive" src="../../assets/images/photo.png" width="20" height="10">
-            </div>
-
-           
-               <div class="card-text1" >
-                  <h4> {{"Description:"}}</h4> <br>
-                    {{charity.description}}
-
-               </div>
-               <div class="card-text" >       
-                {{"Amount required:"}}  {{charity.budgetRequired}}<br>
-                {{"Amount collected:"}} {{charity.amountCollected}}
-              </div>
-
-             </div>
-        </form>
-    </div>
-    </div> -->
-
-
-    <div class="container1">
+<div class="container1">
     <section id="a-1">
-
+      <h1>{{charity.title}}</h1>
       <img src="../../assets/images/photo.png">
       <h3> {{"Description:"}}</h3>
       <p>
         {{charity.description}}
       </p>
-      <!-- <h6> {{"Amount required:"}}  {{charity.budgetRequired}} {{"/"}}
-        {{"Amount collected:"}} {{charity.amountCollected}}<br>
-        {{"Participants signed up: "}} {{charity.volunteersSignedUp}} 
-        
-      </h6> -->
 
       <p><strong _ngcontent-c2="">{{"Amount required:"}} </strong> {{charity.budgetRequired}} {{"/"}}
         <strong _ngcontent-c2="">{{"Amount collected:"}} </strong> {{charity.amountCollected}}<br>

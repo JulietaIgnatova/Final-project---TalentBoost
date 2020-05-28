@@ -18,7 +18,13 @@ export class CharityService {
   }
 
   getCharity(title: string){
+    console.log(title);
     return this.http.get('http://localhost:8080/api/v1/charities/' + title);
+  }
+  
+  getFilteredCharity(title: string){
+    console.log(title);
+     return this.http.get('http://localhost:8080/api/v1/charities/filtered?title=' + title);
   }
 
   createCharity(charity){

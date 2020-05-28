@@ -91,6 +91,11 @@ public class CharityController {
         charityService.participateInCharity(charity, userId);
     }
 
+    @GetMapping("/filtered")
+    public List<Charity> getFilteredCharitiesByTitle(@RequestParam(name = "title", required = true) String title){
+        return charityService.getFilteredCharitiesByTitle(title);
+    }
+
     @ExceptionHandler(EmptyResultDataAccessException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void userNotFoundExceptionHandler() {

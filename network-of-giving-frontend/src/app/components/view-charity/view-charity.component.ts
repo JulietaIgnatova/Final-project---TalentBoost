@@ -20,7 +20,7 @@ export class ViewCharityComponent implements OnInit {
   getCharity(title: string){
     this.charityService.getCharity(title).subscribe(
       data => {
-        this.charity = data;
+        this.charity = data;  
       },
       err => console.log(err),
       () => console.log('charity is loaded')

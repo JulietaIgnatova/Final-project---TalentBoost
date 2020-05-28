@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CharityService implements ICharityService {
@@ -107,11 +108,12 @@ public class CharityService implements ICharityService {
         repository.participateInCharity(charity, userId);
     }
 
-    //    public List<Charity> getFiteredCharitiesByTitle(String filter) {
-//        return getAllCharities().stream().filter(
-//                charity -> {
-//                    return charity.getName().toLowerCase().contains(filter.toLowerCase());
-//                }).collect(Collectors.toList());
-//    }
-//
+       @Override
+        public List<Charity> getFilteredCharitiesByTitle(String filter) {
+        return getAllCharities().stream().filter(
+                charity -> {
+                    return charity.getTitle().toLowerCase().contains(filter.toLowerCase());
+                }).collect(Collectors.toList());
+    }
+
 }

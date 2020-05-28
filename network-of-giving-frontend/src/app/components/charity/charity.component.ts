@@ -33,9 +33,9 @@ export class CharityComponent implements OnInit {
       this.getCharities();
       return;
     }
-    this.charityService.getCharity(this.titleToSearch).subscribe(
+    this.charityService.getFilteredCharity(this.titleToSearch).subscribe(
       data => {
-        this.charities = [data]
+        this.charities = data
       },
       err => console.log(err),
       () => console.log('charity found')
