@@ -8,7 +8,7 @@
 <div class="container1">
     <section id="a-1">
       <h1>{{charity.title}}</h1>
-      <img src="../../assets/images/photo.png">
+      <img [src]="'data:image/png;base64,' + charity.imageBase64" alt="">
       <h3> {{"Description:"}}</h3>
       <p>
         {{charity.description}}

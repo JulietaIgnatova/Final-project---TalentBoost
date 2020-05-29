@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ViewCharityComponent } from './components/view-charity/view-charity.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ViewCharityComponent } from './components/view-charity/view-charity.com
     CreateCharityComponent,
     RegisterComponent,
     LoginComponent,
-    ViewCharityComponent
+    ViewCharityComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

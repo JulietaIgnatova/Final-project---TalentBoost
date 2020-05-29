@@ -37,8 +37,8 @@ public class JdbcUserRepository implements IUserRepository {
 
     @Override
     public void addUser(User user) {
-        jdbcTemplate.update("INSERT INTO USERS(name,username,age,gender, location) VALUES (?, ?, ?, ?, ?) ", user.getName(),
-                user.getUsername(), user.getAge(), user.getGender(), user.getLocation());
+        jdbcTemplate.update("INSERT INTO USERS(name, username, age, gender, location, password) VALUES (?, ?, ?, ?, ?, ?) ", user.getName(),
+                user.getUsername(), user.getAge(), user.getGender(), user.getLocation(), user.getPassword());
 
     }
 

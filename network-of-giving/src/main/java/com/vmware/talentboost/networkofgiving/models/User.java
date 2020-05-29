@@ -14,7 +14,21 @@ public class User {
     private int age;
     private String gender;
 
-    public User(){}
+    @NotBlank
+    private String password;
+
+    public User() {
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
     public User(int id, String name, @NotBlank @Length(max = 128) String username, int age, String gender, String location) {
         this.id = id;
@@ -74,7 +88,6 @@ public class User {
     public String getLocation() {
         return location;
     }
-
 
 
 }

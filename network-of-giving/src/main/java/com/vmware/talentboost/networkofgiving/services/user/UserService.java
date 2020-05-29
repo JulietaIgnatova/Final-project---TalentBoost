@@ -4,12 +4,16 @@ import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.repositories.user.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class UserService implements IUserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final IUserRepository repository;
 
@@ -31,6 +35,7 @@ public class UserService implements IUserService {
 
     @Override
     public void addUser(final User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.addUser(user);
     }
 

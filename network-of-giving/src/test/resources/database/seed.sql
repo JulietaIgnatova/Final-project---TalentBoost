@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS Users(
     username VARCHAR(128) NOT NULL UNIQUE,
     age INT NOT NULL,
     gender VARCHAR(1),
-    location VARCHAR(128)
+    location VARCHAR(128),
+     password VARCHAR(128),
+     role VARCHAR(128)
 );
 
 CREATE TABLE IF NOT EXISTS Charities(
@@ -30,10 +32,10 @@ CREATE TABLE IF NOT EXISTS Donators(
     donated_money DECIMAL
 );
 
-INSERT INTO Users (name,username,age,gender,location)
+INSERT INTO Users (name,username,age,gender,location, password,role)
 VALUES
-('Maria','maria',21,'F','Sofia'),
-('Martin','martin',22,'M','Plovdiv');
+('Maria','maria',21,'F','Sofia','$2a$10$qW/B129pg21XPYR6XA8B.OQg4UGsYesbRpYPdgt9rhzxWWMn11bHC','ROLE_USER'),
+('Martin','martin',22,'M','Plovdiv','$2a$10$qW/B129pg21XPYR6XA8B.OQg4UGsYesbRpYPdgt9rhzxWWMn11bHC','ROLE_USER');
 
 INSERT INTO Charities(creator_id, title, description, budget_required, amount_collected,volunteers_required, volunteers_signed_up)
 VALUES

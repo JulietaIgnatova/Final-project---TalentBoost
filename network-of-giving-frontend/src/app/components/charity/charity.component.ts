@@ -29,7 +29,7 @@ export class CharityComponent implements OnInit {
   }
 
   searchForCharity(){
-    if(this.titleToSearch == ""){
+    if(this.titleToSearch == "" || this.titleToSearch == null){
       this.getCharities();
       return;
     }

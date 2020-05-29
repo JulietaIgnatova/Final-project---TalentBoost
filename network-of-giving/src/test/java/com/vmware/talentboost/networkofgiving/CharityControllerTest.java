@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,19 @@ import static org.junit.Assert.*;
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:database/seed.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:database/purge.sql")})
 public class CharityControllerTest {
+
+    private  HttpHeaders headers;
+    @Before
+    public void setHeaders(){
+        String plainCreds = "maria:123456";
+        byte[] plainCredsBytes = plainCreds.getBytes();
+        byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+        String base64Creds = new String(base64CredsBytes);
+        headers = new HttpHeaders();
+        headers.add("Authorization", "Basic " + base64Creds);
+        //HttpEntity<String> request = new HttpEntity<String>(headers);
+    }
+
     @Autowired
     private TestRestTemplate restTemplate;
 
@@ -37,10 +52,11 @@ public class CharityControllerTest {
 
     @Test
     public void testGetAllCharities() {
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         int expectedNumberOfUsers = 2;
 
         ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(url,
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<Charity>>() {
+                HttpMethod.GET, request, new ParameterizedTypeReference<List<Charity>>() {
                 });
         HttpStatus responseStatus = responseEntity.getStatusCode();
         final List<Charity> charityListList = responseEntity.getBody();
@@ -53,11 +69,11 @@ public class CharityControllerTest {
 
     @Test
     public void testGetExistingCharity() {
-
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         final String title = "save the world";
         final String getUrl = url + "/" + title;
 
-        ResponseEntity<Charity> responseEntity = restTemplate.getForEntity(getUrl, Charity.class);
+        ResponseEntity<Charity> responseEntity = restTemplate.exchange(getUrl,HttpMethod.GET,request, Charity.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
         final Charity charity = responseEntity.getBody();
         //System.out.println(charity.getTitle());
@@ -67,11 +83,11 @@ public class CharityControllerTest {
 
     @Test
     public void testGetNonExistingCharity() {
-
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         final String title = "save world";
         final String getUrl = url + "/" + title;
 
-        ResponseEntity<Charity> responseEntity = restTemplate.getForEntity(getUrl, Charity.class);
+        ResponseEntity<Charity> responseEntity = restTemplate.exchange(getUrl,HttpMethod.GET,request, Charity.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.NOT_FOUND, responseStatus);
@@ -88,12 +104,12 @@ public class CharityControllerTest {
         body.add("imageFile", null);
         body.add("body", charityAsJson);
 
-        HttpHeaders headers = new HttpHeaders();
+
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(url, requestEntity, Void.class);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(url,HttpMethod.POST, requestEntity, Void.class);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
         assertEquals(HttpStatus.CREATED, responseStatus);
@@ -118,16 +134,15 @@ public class CharityControllerTest {
         body.add("imageFile", null);
         body.add("body", charityAsJson);
 
-        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(url, requestEntity, Void.class);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(url,HttpMethod.PUT, requestEntity, Void.class);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
-        assertEquals(HttpStatus.BAD_REQUEST, responseStatus);
+        assertEquals(HttpStatus.METHOD_NOT_ALLOWED, responseStatus);
     }
 
     @Test
@@ -136,7 +151,7 @@ public class CharityControllerTest {
         final String putUrl = url + "/" + title;
         final Charity expected = new Charity(1, 1, title, "clean the world", 10000, 200, 20, 10);
 
-        HttpEntity<Charity> requestUpdate = new HttpEntity<>(expected, new HttpHeaders());
+        HttpEntity<Charity> requestUpdate = new HttpEntity<>(expected, headers);
         ResponseEntity<Void> responseEntity = restTemplate.exchange(putUrl, HttpMethod.PUT, requestUpdate, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
@@ -153,7 +168,7 @@ public class CharityControllerTest {
         final String putUrl = url + "/" + title;
         final Charity expected = new Charity(1, 1, title, "clean the world", 10000, 200, 20, 10);
 
-        HttpEntity<Charity> requestUpdate = new HttpEntity<>(expected, new HttpHeaders());
+        HttpEntity<Charity> requestUpdate = new HttpEntity<>(expected, headers);
         ResponseEntity<Void> responseEntity = restTemplate.exchange(putUrl, HttpMethod.PUT, requestUpdate, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
@@ -162,10 +177,11 @@ public class CharityControllerTest {
 
     @Test
     public void testDeleteExistingCharity() {
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         final String title = "save the world";
         final String deleteUrl = url + "/" + title;
 
-        ResponseEntity<Void> responseEntity = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, null, Void.class);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, request, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.NO_CONTENT, responseStatus);
@@ -173,10 +189,11 @@ public class CharityControllerTest {
 
     @Test
     public void testDeleteNonExistingCharity() {
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         final String title = "save the world today";
         final String deleteUrl = url + "/" + title;
 
-        ResponseEntity<Void> responseEntity = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, null, Void.class);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, request, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.BAD_REQUEST, responseStatus);
@@ -184,12 +201,13 @@ public class CharityControllerTest {
 
     @Test
     public void testGetParticipantsOfExistingCharity() {
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         int sizeOfList = 2;
         final String title = "better world";
         String getUrl = url + "/" + title + "/participants";
 
         ResponseEntity<List<User>> responseEntity = restTemplate.exchange(getUrl,
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
+                HttpMethod.GET, request, new ParameterizedTypeReference<List<User>>() {
                 });
         HttpStatus responseStatus = responseEntity.getStatusCode();
         final List<User> actual = responseEntity.getBody();
@@ -202,11 +220,12 @@ public class CharityControllerTest {
 
     @Test
     public void testGetParticipantsOfNonExistingCharity() {
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         final String title = "save the planet";
         String getUrl = url + "/" + title + "/participants";
 
         ResponseEntity<List<User>> responseEntity = restTemplate.exchange(getUrl,
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
+                HttpMethod.GET, request, new ParameterizedTypeReference<List<User>>() {
                 });
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
@@ -215,13 +234,14 @@ public class CharityControllerTest {
 
     @Test
     public void testGetDonationsOfExistingCharity() {
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         final String title = "save the world";
         String getUrl = url + "/" + title + "/donations";
 
         int sizeOfList = 2;
 
         ResponseEntity<List<User>> responseEntity = restTemplate.exchange(getUrl,
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
+                HttpMethod.GET, request, new ParameterizedTypeReference<List<User>>() {
                 });
         HttpStatus responseStatus = responseEntity.getStatusCode();
         final List<User> actual = responseEntity.getBody();
@@ -235,11 +255,12 @@ public class CharityControllerTest {
 
     @Test
     public void testGetDonationsOfNonExistingCharity() {
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         final String title = "save the world today";
         String getUrl = url + "/" + title + "/donations";
 
         ResponseEntity<List<User>> responseEntity = restTemplate.exchange(getUrl,
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
+                HttpMethod.GET, request, new ParameterizedTypeReference<List<User>>() {
                 });
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
@@ -249,10 +270,11 @@ public class CharityControllerTest {
 
     @Test
     public void testGetCreatorOfExistingCharity() {
+        HttpEntity<String> request = new HttpEntity<String>(headers);
         final String title = "save the world";
         String getUrl = url + "/" + title + "/creator";
 
-        ResponseEntity<User> responseEntity = restTemplate.getForEntity(getUrl, User.class);
+        ResponseEntity<User> responseEntity = restTemplate.exchange(getUrl, HttpMethod.GET, request, User.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
         final User user = responseEntity.getBody();
 
@@ -267,7 +289,9 @@ public class CharityControllerTest {
         final String postUrl = url + "/donate/" + userId + "?money=" + donatedMoney;
         final Charity expected = new Charity(1, 1, "save the world", "we are going to clean the world", 10000, 200, 200, 10);
 
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(postUrl, expected, Void.class);
+        HttpEntity<Charity> requestUpdate = new HttpEntity<>(expected, headers);
+
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(postUrl, HttpMethod.POST,requestUpdate, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.NO_CONTENT, responseStatus);
@@ -287,7 +311,8 @@ public class CharityControllerTest {
         final String title = "save the planet";
         final Charity body = new Charity(1, 1, title, "we are going to clean the world", 10000, 200, 200, 10);
 
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(postUrl, body, Void.class);
+        HttpEntity<Charity> requestUpdate = new HttpEntity<>(body, headers);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(postUrl,HttpMethod.POST,requestUpdate, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.BAD_REQUEST, responseStatus);
@@ -300,7 +325,8 @@ public class CharityControllerTest {
         final String postUrl = url + "/donate/" + userId + "?money=" + donatedMoney;
         final Charity body = new Charity(1, 1, "save the world", "we are going to clean the world", 10000, 200, 200, 10);
 
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(postUrl, body, Void.class);
+        HttpEntity<Charity> requestUpdate = new HttpEntity<>(body, headers);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(postUrl, HttpMethod.POST,requestUpdate, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.BAD_REQUEST, responseStatus);
@@ -316,7 +342,9 @@ public class CharityControllerTest {
         final Charity body = new Charity(1, 1, "save the world", "we are going to clean the world", 10000, 10, 200, 20);
 
         int expectedVolunteers = body.getVolunteersSignedUp() + 1;
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(postUrl, body, Void.class);
+
+        HttpEntity<Charity> requestUpdate = new HttpEntity<>(body, headers);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(postUrl,  HttpMethod.POST,requestUpdate, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.NO_CONTENT, responseStatus);
@@ -335,7 +363,9 @@ public class CharityControllerTest {
         final Charity body = new Charity(1, 1, "save the world", "we are going to clean the world", 10000, 10, 200, 20);
 
         int expectedVolunteers = body.getVolunteersSignedUp() + 1;
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(postUrl, body, Void.class);
+
+        HttpEntity<Charity> requestUpdate = new HttpEntity<>(body, headers);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(postUrl,  HttpMethod.POST,requestUpdate, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.BAD_REQUEST, responseStatus);
@@ -351,7 +381,8 @@ public class CharityControllerTest {
         final Charity body = new Charity(1, 1, "today", "we are going to clean the world", 10000, 10, 200, 20);
 
         int expectedVolunteers = body.getVolunteersSignedUp() + 1;
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity(postUrl, body, Void.class);
+        HttpEntity<Charity> requestUpdate = new HttpEntity<>(body, headers);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(postUrl,  HttpMethod.POST,requestUpdate, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.BAD_REQUEST, responseStatus);

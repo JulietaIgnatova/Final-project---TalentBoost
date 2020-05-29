@@ -1,8 +1,7 @@
 <header class="header-6">
     <div class="branding">
         <a href="javascript://" class="nav-link">
-         <clr-icon shape="vm-bug"></clr-icon> 
-            <!-- <img src="images/Roses.png" height="300px" width="100%" /> -->
+            <img _ngcontent-c1="" alt="" class="d-inline-block align-top" height="30" src="../../assets/images/icon.png" width="50" height="50">
             <span class="title">Network for Giving</span>
         </a>
     </div>
@@ -16,44 +15,44 @@
   </header>
 
   <div class="login-wrapper">
-    <form class="login">
+    <form class="login" [formGroup]="registerForm" (ngSubmit)="register()">
        
         <div class="login-group">
             
            <clr-input-container>
             <label class="clr-sr-only">Username</label>
-            <input type="text" name="username" clrInput placeholder="Username" required minlength="5" />
+            <input type="text" formControlName="username" name="username" clrInput placeholder="Username" required minlength="5" />
             <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
             <clr-control-error *clrIfError="'minlength'">It must be at least 5 characters!</clr-control-error>
            </clr-input-container>
 
             <clr-password-container>
-                  <input placeholder="Password" clrPassword  name="password" required minlength="8" />
+                  <input placeholder="Password" formControlName="password" clrPassword  name="password" required minlength="6" />
                   <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
                   <clr-control-error *clrIfError="'minlength'">It must be at least 8 characters!</clr-control-error>
             </clr-password-container>
 
             <clr-input-container>
                 <label class="clr-sr-only">Name</label>
-                <input type="text" name="name" clrInput placeholder="Name" required minlength="2"  />
+                <input type="text" formControlName="name" name="name" clrInput placeholder="Name" required minlength="2"  />
                 <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
                 <clr-control-error *clrIfError="'minlength'"></clr-control-error>
             </clr-input-container>
 
             <clr-input-container>
                 <label class="clr-sr-only">Age</label>
-                <input type="text" name="age" clrInput placeholder="Age"  />
+                <input type="number" min="10" max="90" formControlName="age" name="age" clrInput placeholder="Age"/>
                 <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
             </clr-input-container>
                   
               <clr-radio-container clrInline>
                     <label>Gender</label>
                     <clr-radio-wrapper>
-                      <input type="radio" clrRadio name="options" required value="option1" />
+                      <input type="radio" clrRadio name="options" required value="M" />
                       <label>Male</label>
                     </clr-radio-wrapper>
                     <clr-radio-wrapper>
-                      <input type="radio" clrRadio name="options" required value="option2" />
+                      <input type="radio" clrRadio name="options" required value="F" />
                       <label>Female</label>
                     </clr-radio-wrapper>
         
@@ -61,12 +60,10 @@
               
                 <clr-input-container>
                     <label class="clr-sr-only">Location</label>
-                    <input type="text" name="location" clrInput placeholder="Location"  />
+                    <input type="text" formControlName="location" name="location" clrInput placeholder="Location"  />
                     <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
                 </clr-input-container>
-            <!-- <div class="error active">
-                Invalid user name or password
-            </div> -->
+           
             <button type="submit" class="btn btn-primary">REGISTER</button>
         
         </div>

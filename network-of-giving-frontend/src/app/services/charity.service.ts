@@ -4,17 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-}
-
 @Injectable()
 export class CharityService {
 
   constructor(private http: HttpClient) { }
 
   getCharities(){
-    return this.http.get('http://localhost:8080/api/v1/charities');
+    return this.http.get('http://localhost:8080/api/v1/charities/');
   }
 
   getCharity(title: string){
@@ -27,13 +23,11 @@ export class CharityService {
      return this.http.get('http://localhost:8080/api/v1/charities/filtered?title=' + title);
   }
 
-  createCharity(charity){
-    let body = JSON.stringify(charity);
-    return this.http.post('http://localhost:8080/api/v1/charities/', body, httpOptions)
-  }
-
+ 
   createCharityWithImage(charityFormData){
-    return this.http.post<any>('http://localhost:8080/api/v1/charities/',charityFormData);
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "Basic " + btoa('mmitkoo' + ':' + '123456'));
+    return this.http.post<any>('http://localhost:8080/api/v1/charities/',charityFormData, {headers});
   }
 
 }

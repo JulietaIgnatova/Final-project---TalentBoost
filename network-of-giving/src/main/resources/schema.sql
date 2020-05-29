@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS Users(
     username VARCHAR(128) NOT NULL UNIQUE,
     age INT NOT NULL,
     gender VARCHAR(1),
-    location VARCHAR(128)
+    location VARCHAR(128),
+    password VARCHAR(128),
+    role VARCHAR(128)
 );
 
 CREATE TABLE IF NOT EXISTS Charities(
