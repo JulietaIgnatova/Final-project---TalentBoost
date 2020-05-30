@@ -1,6 +1,6 @@
 <div class="container" *ngIf="charity && currentUser.id == charity.creatorId">
   <button class="btn btn=primary">Edit</button>
-  <button class="btn btn-primary">Delete</button>
+  <button class="btn btn-primary" (click)="onDelete(charity.title)">Delete</button>
 </div>
 <div class="container1" *ngIf="charity">
 <section id="a-1">

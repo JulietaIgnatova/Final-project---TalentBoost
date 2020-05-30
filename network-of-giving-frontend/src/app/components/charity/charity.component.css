@@ -3,17 +3,12 @@
 }
 
 .clr-row {
-    padding-right: 200px;
-    padding-left: 220px;
-    padding-top: 80px;
+    padding-right: 140px;
+    padding-left: 140px;
+    padding-top: 60px;
     padding-bottom: 50px;
 }
 
-  
-  .card-text{
-    color: blue;
-    overflow: auto;
-  }
   
   .card-header{
     font-weight: bold;
@@ -42,8 +37,10 @@
   .card-text{
     bottom: 8px;
     left: 16px;
+    font-weight: bold;
+    overflow: auto;
   }
 
 
-  
+ 
   

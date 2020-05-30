@@ -23,7 +23,8 @@ export class AuthenticationService {
     login(username: string, password: string) {
         return this.http.post<any>(`${environment.apiUrl}/users/login/`, { username, password })
             .pipe(map(user => {
-                if (user) {     
+                if (user) {    
+                    localStorage.setItem('token', btoa(`${username}:${password}`)); 
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
                 }
@@ -34,6 +35,7 @@ export class AuthenticationService {
 
     logout() {
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('token');
         this.currentUserSubject.next(null);
     }
 }

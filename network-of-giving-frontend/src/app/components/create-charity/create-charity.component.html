@@ -1,28 +1,37 @@
-
-<form clrForm [formGroup]="charityForm" (ngSubmit)="submitCharity()">
+<div class="alert alert-danger" role="alert" *ngIf="showAlert">
+    <div class="alert-items">
+        <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+            </div>
+            <span class="alert-text">
+                There is charity with the same title! 
+            </span>
+        </div>
+    </div>
+</div>
+<form class ="createChariry" clrForm [formGroup]="charityForm" (ngSubmit)="submitCharity()">
 
     <clr-input-container>
         <label>Title</label>
         <input clrInput type="text" formControlName="title" />
-        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
+        <clr-control-error>Must include title</clr-control-error>
     </clr-input-container>
 
      <clr-textarea-container>
         <label>Description</label>
-       
-        <textarea clrTextarea type="text" formControlName="description"></textarea>
+        <textarea clrTextarea type="text" formControlName="description" rows="6"></textarea>
+        <clr-control-error>Must include description</clr-control-error>
     </clr-textarea-container>
 
     <clr-input-container>
         <label>Budget required</label>
         <input clrInput type="text" formControlName="budgetRequired" />
-        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
     </clr-input-container>
 
     <clr-input-container>
         <label>Volunteers required</label>
         <input clrInput type="text" formControlName="volunteersRequired" />
-        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
     </clr-input-container>
     
     <div class="container">
@@ -39,3 +48,13 @@
     <button type="submit" class="btn btn-primary" >Create</button>
     
 </form>
+<clr-modal [(clrModalOpen)]="charityCreateModal" [clrModalClosable]="false">
+    <h3 class="modal-title" >{{validMessage}}</h3>
+    <div class="modal-body">
+        <p>Do you want to create new?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn btn-primary" (click)="cancel()">Cancel</button>
+      <button type="button" class="btn btn-outline" (click)="ok()">YES</button>
+    </div>
+  </clr-modal>

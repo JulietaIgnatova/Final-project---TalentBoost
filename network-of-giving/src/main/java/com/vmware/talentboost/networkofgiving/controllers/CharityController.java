@@ -1,6 +1,7 @@
 package com.vmware.talentboost.networkofgiving.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.services.charity.ICharityService;
@@ -110,5 +111,11 @@ public class CharityController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void illegalArgumentsHandler() {
     }
+
+    @ExceptionHandler(InvalidFormatException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public void invalidFormatExceptionHandler() {
+    }
+
 
 }

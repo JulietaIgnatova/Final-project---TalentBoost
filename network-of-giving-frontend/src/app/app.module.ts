@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule,HttpClientJsonpModule } from '@angular/common/http'
+import { HttpClientModule,HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +18,8 @@ import { ViewCharityComponent } from './components/view-charity/view-charity.com
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ShareButtonsModule } from '@ngx-share/buttons';
-
+import { ModalComponent } from './components/modal/modal.component';
+import { AuthInterceptor } from './_helpers/auth-interceptor.service'
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { ShareButtonsModule } from '@ngx-share/buttons';
  
     NavigationComponent,
  
-    ProfileComponent
+    ProfileComponent,
+ 
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,7 @@ import { ShareButtonsModule } from '@ngx-share/buttons';
       debug: true
     })
   ],
-  providers: [CharityService],
+  providers: [CharityService,{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

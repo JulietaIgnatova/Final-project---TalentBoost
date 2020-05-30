@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Observable, BehaviorSubject } from 'rxjs';
 import { of } from 'rxjs';
 import { Charity } from '../models/charity';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class CharityService {
@@ -36,9 +37,12 @@ export class CharityService {
 
  
   createCharityWithImage(charityFormData){
-    let headers = new HttpHeaders();
-    headers = headers.append("Authorization", "Basic " + btoa('mmitkoo' + ':' + '123456'));
-    return this.http.post<any>('http://localhost:8080/api/v1/charities/',charityFormData, {headers});
+    return this.http.post<any>('http://localhost:8080/api/v1/charities/',charityFormData);
   }
+
+  deleteCharity(title: string): Observable<boolean> {
+     return this.http.delete<any>(`${environment.apiUrl}/charities/${title}`);
+  }
+
 
 }
