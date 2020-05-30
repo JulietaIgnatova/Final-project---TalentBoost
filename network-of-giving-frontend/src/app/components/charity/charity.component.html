@@ -1,36 +1,9 @@
-<header class="header-6">
-    <div class="branding">
-        <a href="javascript://" class="nav-link">
-            <img _ngcontent-c1="" alt="" class="d-inline-block align-top" height="30" src="../../assets/images/icon.png" width="50" height="50">
-            <span class="title">Network for Giving</span>
-        </a>
-    </div>
-    <div class="search-container">
-        <form (ngSubmit)="searchForCharity()">
-            <div class="input">
-
-          <input type="text" placeholder="Search.." [(ngModel)]="titleToSearch" name="text">
-
-          <button type="submit" >
-              <i class="fa fa-search"> 
-                  <clr-icon shape="search"></clr-icon>
-              </i>
-          </button>
-
-        </div>
-        </form>
-    </div>
-    <div class="header-actions">
-        <a href="javascript://" class="nav-link nav-icon-text">
-            <div class="buttons">
-               <button class="btn btn-primary" (click)="onLogin()">Login</button>
-               <button class="btn btn-primary" (click)="onRegister()">Register</button>
-            </div>
-        </a>
-    </div>
-</header>
-
+<a href="/createCharity" class="btn btn-primary btn-icon" >
+    <clr-icon shape="plus"></clr-icon>
+    Create
+</a>
 <div class="clr-row">
+    <div class="spinner-border spinner-border-sm"></div>
     <div class="clr-col-sm-4 clr-col-md-4" *ngFor='let charity of charities'>
             <div class="card" >
                 <div class="card-header">

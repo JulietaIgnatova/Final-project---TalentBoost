@@ -1,6 +1,7 @@
 package com.vmware.talentboost.networkofgiving.services.user;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
+import com.vmware.talentboost.networkofgiving.models.LoginForm;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.repositories.user.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,16 @@ public class UserService implements IUserService {
             throw new IllegalArgumentException("Invalid arguments");
         }
         return repository.getAllCreatedCharities(username);
+    }
+    @Override
+    public User login(LoginForm loginForm) {
+        if (!repository.checkUser(loginForm.getUsername())) {
+            throw new IllegalArgumentException("Invalid username");
+        }
+        User user = repository.getUser(loginForm.getUsername());
+        if(!passwordEncoder.matches(loginForm.getPassword(), user.getPassword())){
+            throw new IllegalArgumentException("Invalid password");
+        }
+        return user;
     }
 }

@@ -18,6 +18,8 @@ public class UserMapRower implements RowMapper<User> {
         result.setAge(rs.getInt("age"));
         result.setGender(rs.getString("gender"));
         result.setLocation(rs.getString("location"));
+        result.setRole(rs.getString("role"));
+        result.setPassword(rs.getString("password"));
 
         return result;
     }

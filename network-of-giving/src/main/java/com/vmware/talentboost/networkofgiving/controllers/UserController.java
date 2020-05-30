@@ -1,6 +1,7 @@
 package com.vmware.talentboost.networkofgiving.controllers;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
+import com.vmware.talentboost.networkofgiving.models.LoginForm;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.services.user.IUserService;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,6 +21,13 @@ public class UserController {
 
     public UserController(IUserService userService) {
         this.userService = userService;
+    }
+
+
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public User login(@RequestBody LoginForm loginForm) {
+        return userService.login(loginForm);
     }
 
     @GetMapping

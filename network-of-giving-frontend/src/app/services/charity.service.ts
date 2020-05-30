@@ -1,26 +1,37 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { of } from 'rxjs';
+import { Charity } from '../models/charity';
 
 @Injectable()
 export class CharityService {
 
-  constructor(private http: HttpClient) { }
+  private currentCharities: BehaviorSubject<Charity[]>;
+  
 
-  getCharities(){
-    return this.http.get('http://localhost:8080/api/v1/charities/');
+  public get currentAvailableCharities(): Charity[] {
+    return this.currentCharities.value;
+}
+
+  constructor(private http: HttpClient) { 
+    this.currentCharities = new BehaviorSubject<Charity[]>([]);
+       
   }
 
-  getCharity(title: string){
+  getCharities(): Observable<Charity[]>{
+    return this.http.get<Charity[]>('http://localhost:8080/api/v1/charities/');
+  }
+
+  getCharity(title: string):Observable<Charity>{
     console.log(title);
-    return this.http.get('http://localhost:8080/api/v1/charities/' + title);
+    return this.http.get<Charity>('http://localhost:8080/api/v1/charities/' + title);
   }
   
-  getFilteredCharity(title: string){
+  getFilteredCharity(title: string):Observable<Charity[]>{
     console.log(title);
-     return this.http.get('http://localhost:8080/api/v1/charities/filtered?title=' + title);
+     return this.http.get<Charity[]>('http://localhost:8080/api/v1/charities/filtered?title=' + title);
   }
 
  

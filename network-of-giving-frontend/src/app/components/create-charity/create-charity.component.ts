@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {CharityService } from '../../services/charity.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { User } from 'src/app/models/user';
 
 
 @Component({
@@ -13,12 +15,17 @@ export class CreateCharityComponent implements OnInit {
   charityForm: FormGroup;
   validMessage: string = "";
   selectedFile: File;
+  public currentUser: User;
 
-  constructor(private charityService: CharityService) { }
+  constructor(
+    private charityService: CharityService,
+    private auth: AuthenticationService) {
+    this.currentUser = auth.currentUserValue;
+    }
 
   ngOnInit(): void {
     this.charityForm = new FormGroup({
-      creatorId: new FormControl('',Validators.required),
+      creatorId: new FormControl(this.currentUser.id),
       title: new FormControl('',Validators.required),
       description: new FormControl('',Validators.required),
       budgetRequired: new FormControl('',Validators.required),

@@ -1,6 +1,7 @@
 package com.vmware.talentboost.networkofgiving.services.user;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
+import com.vmware.talentboost.networkofgiving.models.LoginForm;
 import com.vmware.talentboost.networkofgiving.models.User;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface IUserService {
 
     List<Charity> getAllCreatedCharities(String username);
 
+    User login(LoginForm loginForm);
 }
+

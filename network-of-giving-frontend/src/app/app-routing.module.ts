@@ -6,6 +6,8 @@ import {CreateCharityComponent} from './components/create-charity/create-charity
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ViewCharityComponent } from './components/view-charity/view-charity.component';
+import { ProfileComponent } from './components/profile/profile.component';
+
 
 const routes: Routes = [
   {
@@ -27,7 +29,12 @@ const routes: Routes = [
   {
     path: "createCharity",
     component: CreateCharityComponent
-  }
+  },
+  {
+    path: "profile",
+    component: ProfileComponent
+  },
+  
 ]
 
 @NgModule({

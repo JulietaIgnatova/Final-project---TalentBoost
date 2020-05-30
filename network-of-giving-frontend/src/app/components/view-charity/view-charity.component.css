@@ -4,17 +4,19 @@
     padding: 30px;
     justify-content: space-around;
 }
-
-
 .container1 {
   padding: 30px;
 }
-
 img {
     width: 400px;
     height: 400px;
 }
-
 h6 {
     color: blue;
+}
+.charity-info{
+    display: flex;
+}
+.buttons{
+    padding: 20px;
 }

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -8,14 +11,44 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  loginForm: FormGroup
+  returnUrl: string;
+  submitted = false;
+  loading = false;
+  error = '';
 
-  ngOnInit(): void {
+  constructor(private router: Router, private auth: AuthenticationService,private route: ActivatedRoute ){ 
+    if (this.auth.currentUserValue) { 
+      this.router.navigate(['/']);
+  }
   }
 
-  login(){
-    console.log("mitko")
-    this.router.navigate(['/']);
+  ngOnInit(): void {
+    this.loginForm = new FormGroup({
+      username: new FormControl('',Validators.required),
+      password: new FormControl('',Validators.required),
+    })
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+ 
+  submitLogin(){
+    this.submitted = true;
+
+    if (this.loginForm.invalid) {
+          return;
+     }
+     this.loading = true;
+
+     this.auth.login(this.loginForm.get("username").value, this.loginForm.get("password").value)
+     .pipe(first())
+     .subscribe(
+         data => {
+             this.router.navigate([this.returnUrl]);
+         },
+         error => {
+             this.error = error;
+             this.loading = false;
+         });
   }
 
   onRegister(){

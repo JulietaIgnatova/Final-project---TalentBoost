@@ -2,12 +2,6 @@
 <form clrForm [formGroup]="charityForm" (ngSubmit)="submitCharity()">
 
     <clr-input-container>
-        <label>For now</label>
-        <input clrInput type="text" formControlName="creatorId" />
-        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
-    </clr-input-container>
-
-    <clr-input-container>
         <label>Title</label>
         <input clrInput type="text" formControlName="title" />
         <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
@@ -15,8 +9,6 @@
 
      <clr-textarea-container>
         <label>Description</label>
-         <!-- <textarea clrTextarea name="description" rows="6"></textarea> -->
-         <!-- <input clrInput type="text" formControlName="description"  /> -->
        
         <textarea clrTextarea type="text" formControlName="description"></textarea>
     </clr-textarea-container>

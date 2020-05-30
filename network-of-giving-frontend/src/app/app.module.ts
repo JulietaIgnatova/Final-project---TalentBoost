@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule,HttpClientJsonpModule } from '@angular/common/http'
 import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,7 +14,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ViewCharityComponent } from './components/view-charity/view-charity.component';
-import { HeaderComponent } from './components/header/header.component';
+
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ShareButtonsModule } from '@ngx-share/buttons';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +28,10 @@ import { HeaderComponent } from './components/header/header.component';
     RegisterComponent,
     LoginComponent,
     ViewCharityComponent,
-    HeaderComponent
+ 
+    NavigationComponent,
+ 
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +40,11 @@ import { HeaderComponent } from './components/header/header.component';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientJsonpModule,
+    ShareButtonsModule.withConfig({
+      debug: true
+    })
   ],
   providers: [CharityService],
   bootstrap: [AppComponent]

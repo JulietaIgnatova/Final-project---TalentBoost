@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import {CharityService } from '../../services/charity.service'
 import { Router } from '@angular/router';
+import { AuthenticationService} from 'src/app/services/authentication.service'
+import { User } from 'src/app/models/user'
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-charity',
@@ -11,44 +14,33 @@ import { Router } from '@angular/router';
 export class CharityComponent implements OnInit {
   public charities;
   public titleToSearch: string;
+  public currentUser: User;
+ 
+
 
   constructor(private charityService: CharityService,
-    private router: Router) { }
-
-  ngOnInit(): void {
-    this.getCharities();
-  }
-
-  getCharities(){
-    this.charityService.getCharities().subscribe(
-      data => {this.charities = data},
-      err => console.error(err),
-      () => console.log('charities loaded')
-    
-    )
-  }
-
-  searchForCharity(){
-    if(this.titleToSearch == "" || this.titleToSearch == null){
-      this.getCharities();
-      return;
+    private router: Router, private auth: AuthenticationService,
+    private searchService: SearchService) {
+      this.currentUser = auth.currentUserValue;
     }
-    this.charityService.getFilteredCharity(this.titleToSearch).subscribe(
-      data => {
-        this.charities = data
-      },
-      err => console.log(err),
-      () => console.log('charity found')
-    );
-  }
 
-  onLogin(){
-    this.router.navigate(['/login'])
-  }
+    ngOnInit(): void {
+      if(this.charities == null) {
+        this.charityService.getCharities().subscribe(
+          data => {
+            this.charities = data
+          }
+        )
+      }
+        this.searchService.onResults().subscribe(
+          data => {
+            this.charities = data
+          }
+        )
+    }
+
   
-  onRegister(){
-    this.router.navigate(['/register'])
-  }
 
+  
 
 } 

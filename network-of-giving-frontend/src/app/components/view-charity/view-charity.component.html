@@ -1,24 +1,27 @@
-<div class="container">
-    <div class="row">
-      <a class="btn btn=primary" (click)="onBack()">Back to List</a>
-    </div>
+<div class="container" *ngIf="charity && currentUser.id == charity.creatorId">
+  <button class="btn btn=primary">Edit</button>
+  <button class="btn btn-primary">Delete</button>
 </div>
-    
-
-<div class="container1">
-    <section id="a-1">
-      <h1>{{charity.title}}</h1>
+<div class="container1" *ngIf="charity">
+<section id="a-1">
+  <h1><strong>{{charity.title}}</strong></h1>
+    <div class="charity-info">
       <img [src]="'data:image/png;base64,' + charity.imageBase64" alt="">
-      <h3> {{"Description:"}}</h3>
-      <p>
-        {{charity.description}}
-      </p>
-
-      <p><strong _ngcontent-c2="">{{"Amount required:"}} </strong> {{charity.budgetRequired}} {{"/"}}
-        <strong _ngcontent-c2="">{{"Amount collected:"}} </strong> {{charity.amountCollected}}<br>
-        <strong _ngcontent-c2="">{{"Participants signed up: "}} </strong>{{charity.volunteersSignedUp}} 
-      </p>
-
-    </section>
-
+      <div class="buttons">
+        <p>
+          <strong _ngcontent-c2="">{{"Amount required:"}} </strong> {{charity.budgetRequired}} <strong>{{"/ "}}</strong>
+          <strong _ngcontent-c2="">{{"Amount collected:"}} </strong> {{charity.amountCollected}}<br>
+          <strong _ngcontent-c2="">{{"Participants required:"}} </strong> {{charity.volunteersRequired}} <strong>{{"/ "}}</strong>
+          <strong _ngcontent-c2="">{{"Participants signed up: "}} </strong>{{charity.volunteersSignedUp}} 
+        </p>
+        <button class="btn btn-primary">Donate</button>
+        <button class="btn btn=primary">Volunteer</button>
+      </div>
+    </div>
+  <h3> <strong>{{"Description:"}}</strong></h3>
+  <p>
+    {{charity.description}}
+  </p>
+  <br>
+</section>
 </div>

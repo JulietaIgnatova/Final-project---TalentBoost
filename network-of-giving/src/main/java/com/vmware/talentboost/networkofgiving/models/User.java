@@ -14,6 +14,16 @@ public class User {
     private int age;
     private String gender;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    private String role;
+
     @NotBlank
     private String password;
 
