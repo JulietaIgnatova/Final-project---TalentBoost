@@ -29,16 +29,16 @@ import static org.junit.Assert.*;
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:database/seed.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:database/purge.sql")})
 public class UserControllerTest {
-    private  HttpHeaders headers;
+    private HttpHeaders headers;
+
     @Before
-    public void setHeaders(){
+    public void setHeaders() {
         String plainCreds = "maria:123456";
         byte[] plainCredsBytes = plainCreds.getBytes();
         byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
         String base64Creds = new String(base64CredsBytes);
         headers = new HttpHeaders();
         headers.add("Authorization", "Basic " + base64Creds);
-        //HttpEntity<String> request = new HttpEntity<String>(headers);
     }
 
     @Autowired
@@ -69,7 +69,7 @@ public class UserControllerTest {
         final String getUrl = url + "/" + username;
 
         HttpEntity<String> request = new HttpEntity<String>(headers);
-        ResponseEntity<User> responseEntity = restTemplate.exchange(getUrl,HttpMethod.GET, request, User.class);
+        ResponseEntity<User> responseEntity = restTemplate.exchange(getUrl, HttpMethod.GET, request, User.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
         final User user = responseEntity.getBody();
 
@@ -84,7 +84,7 @@ public class UserControllerTest {
         final String getUrl = url + "/" + username;
 
         HttpEntity<String> request = new HttpEntity<String>(headers);
-        ResponseEntity<User> responseEntity = restTemplate.exchange(getUrl,HttpMethod.GET, request, User.class);
+        ResponseEntity<User> responseEntity = restTemplate.exchange(getUrl, HttpMethod.GET, request, User.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.NOT_FOUND, responseStatus);
@@ -99,7 +99,7 @@ public class UserControllerTest {
         String userAsJson = mapper.writeValueAsString(user);
 
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request = new HttpEntity<String>(userAsJson,headers);
+        HttpEntity<String> request = new HttpEntity<String>(userAsJson, headers);
 
         ResponseEntity<Void> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
@@ -116,7 +116,7 @@ public class UserControllerTest {
         String userAsJson = mapper.writeValueAsString(expected);
 
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request = new HttpEntity<String>(userAsJson,headers);
+        HttpEntity<String> request = new HttpEntity<String>(userAsJson, headers);
         ResponseEntity<Void> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, Void.class);
 
         HttpStatus responseStatus = responseEntity.getStatusCode();
@@ -125,7 +125,7 @@ public class UserControllerTest {
         final String username = "karina";
         final String getUrl = url + "/" + username;
 
-        ResponseEntity<User> responseUserEntity = restTemplate.exchange(getUrl,HttpMethod.GET, request, User.class);
+        ResponseEntity<User> responseUserEntity = restTemplate.exchange(getUrl, HttpMethod.GET, request, User.class);
 
         final User user = responseUserEntity.getBody();
 
@@ -197,7 +197,7 @@ public class UserControllerTest {
     @Test
     public void testGetAllParticipatedCharitiesOfExistingUser() {
         int sizeOfList = 2;
-        String getUrl = url+"/maria/charities/participated";
+        String getUrl = url + "/maria/charities/participated";
 
         HttpEntity<String> request = new HttpEntity<String>(headers);
         ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(getUrl,
@@ -216,7 +216,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetAllParticipatedCharitiesOfNonExistingUser() {
-        String getUrl = url+"/mariana/charities/participated";
+        String getUrl = url + "/mariana/charities/participated";
 
         HttpEntity<String> request = new HttpEntity<String>(headers);
         ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(getUrl,
@@ -230,7 +230,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetAllDonatedCharitiesOfExistingUser() {
-        String getUrl = url+"/maria/charities/donated";
+        String getUrl = url + "/maria/charities/donated";
         int sizeOfList = 2;
 
         HttpEntity<String> request = new HttpEntity<String>(headers);
@@ -248,7 +248,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetAllDonatedCharitiesOfNonExistingUser() {
-        String getUrl = url+"/mariana/charities/donated";
+        String getUrl = url + "/mariana/charities/donated";
 
         HttpEntity<String> request = new HttpEntity<String>(headers);
         ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(getUrl,
@@ -261,7 +261,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetAllCreatedCharitiesOfExistingUser() {
-        String getUrl = url+"/maria/charities/created";
+        String getUrl = url + "/maria/charities/created";
 
         int sizeOfList = 1;
 
@@ -280,8 +280,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetAllCreatedCharitiesOfNonExistingUser() {
-        String getUrl = url+"/mariana/charities/created";
-
+        String getUrl = url + "/mariana/charities/created";
 
         HttpEntity<String> request = new HttpEntity<String>(headers);
         ResponseEntity<List<Charity>> responseEntity = restTemplate.exchange(getUrl,

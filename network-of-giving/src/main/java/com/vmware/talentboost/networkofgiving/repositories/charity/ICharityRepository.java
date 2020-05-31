@@ -26,5 +26,7 @@ public interface ICharityRepository {
 
     void donateMoneyForCharity(Charity charity, int userId, double money);
 
-    public void participateInCharity(Charity charity, int userId);
+    void participateInCharity(Charity charity, int userId);
+
+    Double getSuggestionForDonation(int userId);
 }

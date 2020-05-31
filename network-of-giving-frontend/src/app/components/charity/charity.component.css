@@ -5,15 +5,15 @@
 .clr-row {
     padding-right: 140px;
     padding-left: 140px;
-    padding-top: 60px;
+    padding-top: 15px;
     padding-bottom: 50px;
 }
 
-  
   .card-header{
     font-weight: bold;
     overflow: auto;
   }
+
   .card-text1 {
     color: black;
   }
@@ -40,7 +40,7 @@
     font-weight: bold;
     overflow: auto;
   }
-
-
- 
-  
+.create{
+  padding-left: 140px;
+  padding-top: 30px;
+}

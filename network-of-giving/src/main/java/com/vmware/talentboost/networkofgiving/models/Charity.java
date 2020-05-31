@@ -21,6 +21,22 @@ public class Charity {
     private String imageBase64;
 
 
+    public Charity() {
+    }
+
+    public Charity(int id, int creatorId, @NotBlank @Length(max = 128) String title,
+                   String description, double budgetRequired, int volunteersSignedUp,
+                   double amountCollected, int volunteersRequired) {
+        this.id = id;
+        this.creatorId = creatorId;
+        this.title = title;
+        this.description = description;
+        this.budgetRequired = budgetRequired;
+        this.volunteersSignedUp = volunteersSignedUp;
+        this.amountCollected = amountCollected;
+        this.volunteersRequired = volunteersRequired;
+    }
+
     public byte[] getImage() {
         return image;
     }
@@ -37,22 +53,6 @@ public class Charity {
         this.imageBase64 = imageBase64;
     }
 
-
-    public Charity() {
-    }
-
-    public Charity(int id, int creatorId, @NotBlank @Length(max = 128) String title,
-                   String description, double budgetRequired, int volunteersSignedUp,
-                   double amountCollected, int volunteersRequired) {
-        this.id = id;
-        this.creatorId = creatorId;
-        this.title = title;
-        this.description = description;
-        this.budgetRequired = budgetRequired;
-        this.volunteersSignedUp = volunteersSignedUp;
-        this.amountCollected = amountCollected;
-        this.volunteersRequired = volunteersRequired;
-    }
 
     public int getVolunteersSignedUp() {
         return volunteersSignedUp;

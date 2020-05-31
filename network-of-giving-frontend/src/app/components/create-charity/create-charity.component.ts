@@ -41,10 +41,7 @@ export class CreateCharityComponent implements OnInit {
   submitCharity() {
     
     if(this.charityForm.valid){
-      if(this.checkTitle(this.charityForm.get('title').value)){
-        this.showAlert = true;
-        return;
-      }
+      
       this.validMessage = "Your charity form has been submitted. Thank you!"
       const submitFormData = new FormData;
       submitFormData.append('imageFile', this.selectedFile);
@@ -57,15 +54,15 @@ export class CreateCharityComponent implements OnInit {
           this.charityForm.reset();
           this.selectedFile = null;
           this.charityCreateModal=true;
+          this.showAlert=false;
           return true;
         },
         error => {
-          return Observable.throw(error)
+          this.showAlert=true;
+          return Observable.throw(error);
         }
       )
-    } else {
-      this.validMessage = "Please fill out the form before submitting!"
-    }
+      }
   }
 
   processFile(imageInput: any){

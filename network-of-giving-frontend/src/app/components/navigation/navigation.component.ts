@@ -15,6 +15,8 @@ export class NavigationComponent implements OnInit {
   currentUser: User;
   titleToSearch: string;
   charities: Charity[]
+  logoutModal=false;
+
 
   constructor(public router: Router,
     private auth: AuthenticationService,
@@ -23,12 +25,22 @@ export class NavigationComponent implements OnInit {
   }
   ngOnInit(): void {
   }
+
   logout() {
+     this.logoutModal=false;
     this.auth.logout();
-    this.router.navigate(['/login']);
+     this.router.navigate(['/']);
   }
 
   searchForCharity(){
     this.searchService.search(this.titleToSearch);
+  }
+
+  logoutPopUp(){
+    this.logoutModal=true;
+  }
+
+  public cancel(): void {
+    this.logoutModal = false;
   }
 }

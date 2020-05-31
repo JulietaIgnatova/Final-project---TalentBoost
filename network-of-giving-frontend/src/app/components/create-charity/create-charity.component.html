@@ -10,6 +10,7 @@
         </div>
     </div>
 </div>
+
 <form class ="createChariry" clrForm [formGroup]="charityForm" (ngSubmit)="submitCharity()">
 
     <clr-input-container>
@@ -26,12 +27,12 @@
 
     <clr-input-container>
         <label>Budget required</label>
-        <input clrInput type="text" formControlName="budgetRequired" />
+        <input clrInput type="number" formControlName="budgetRequired" />
     </clr-input-container>
 
     <clr-input-container>
         <label>Volunteers required</label>
-        <input clrInput type="text" formControlName="volunteersRequired" />
+        <input clrInput type="number" formControlName="volunteersRequired" />
     </clr-input-container>
     
     <div class="container">
@@ -48,7 +49,8 @@
     <button type="submit" class="btn btn-primary" >Create</button>
     
 </form>
-<clr-modal [(clrModalOpen)]="charityCreateModal" [clrModalClosable]="false">
+
+<clr-modal [(clrModalOpen)]="charityCreateModal" [clrModalClosable]="true">
     <h3 class="modal-title" >{{validMessage}}</h3>
     <div class="modal-body">
         <p>Do you want to create new?</p>

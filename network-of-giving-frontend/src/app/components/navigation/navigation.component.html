@@ -18,7 +18,7 @@
                 <span class="nav-text">{{currentUser.username}}</span>
             </a>
    
-            <a href="" (click)="logout()" class="nav-link nav-icon-text">
+            <a  (click)="logoutPopUp()" class="nav-link nav-icon-text">
                 <clr-icon shape="logout"></clr-icon>
                 <span class="nav-text">Log Out</span>
             </a>
@@ -37,3 +37,11 @@
         </div>
     </ng-template>
 </header>
+
+<clr-modal [(clrModalOpen)]="logoutModal" [clrModalClosable]="false">
+    <h3 class="modal-title" >Do you want to logout?</h3>
+    <div class="modal-footer">
+      <button type="button" class="btn btn btn-primary" (click)="cancel()">Cancel</button>
+      <button type="button" class="btn btn-outline" (click)="logout()">Yes</button>
+    </div>
+  </clr-modal>

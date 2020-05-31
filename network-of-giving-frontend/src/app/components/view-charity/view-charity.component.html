@@ -1,4 +1,32 @@
-<div class="container" *ngIf="charity && currentUser.id == charity.creatorId">
+<div class="alert alert-danger" role="alert" *ngIf="showAlertMessage">
+  <div class="alert-items">
+      <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+          </div>
+          <span class="alert-text">
+              {{alertMessage}}
+              <nav><a href="/profile"> Check profile page!</a></nav>
+          </span>
+      </div>
+  </div>
+</div>
+
+<div class="alert alert-success" role="alert" *ngIf="showSuccessMessage">
+  <div class="alert-items">
+      <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+          </div>
+          <span class="alert-text">
+             <!-- You have successfully participated for this charity! -->
+             {{successMessage}}
+          </span>
+      </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="charity && currentUser && currentUser.id == charity.creatorId">
   <button class="btn btn=primary">Edit</button>
   <button class="btn btn-primary" (click)="onDelete(charity.title)">Delete</button>
 </div>
@@ -14,8 +42,10 @@
           <strong _ngcontent-c2="">{{"Participants required:"}} </strong> {{charity.volunteersRequired}} <strong>{{"/ "}}</strong>
           <strong _ngcontent-c2="">{{"Participants signed up: "}} </strong>{{charity.volunteersSignedUp}} 
         </p>
-        <button class="btn btn-primary">Donate</button>
-        <button class="btn btn=primary">Volunteer</button>
+        <div *ngIf="currentUser">
+        <button class="btn btn-primary" (click)="donatePopUp()">Donate</button>
+        <button class="btn btn=primary" (click)="volunteerPopUp()">Volunteer</button>
+        </div>
       </div>
     </div>
   <h3> <strong>{{"Description:"}}</strong></h3>
@@ -25,3 +55,26 @@
   <br>
 </section>
 </div>
+
+<clr-modal [(clrModalOpen)]="volunteerModal" [clrModalClosable]="true" *ngIf="charity">
+  <h3 class="modal-title" >Do you want to be a volunteer in <strong>"{{charity.title}}"</strong> chariry?</h3>
+  <div class="modal-body">
+    <h4>It has {{charity.volunteersSignedUp}} volunteers signed up.</h4>
+</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn btn-primary" (click)="volunteer()">Yes</button>
+    <button type="button" class="btn btn-outline" (click)="dismiss()">Cancel</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="donateModal" [clrModalClosable]="true" *ngIf="charity">
+  <h3 class="modal-title" >Donate money for "{{charity.title}}"</h3>
+  <div class="modal-body">
+    <p *ngIf="suggestionMoney != 0">Suggestion money to donate: {{suggestionMoney}}</p>
+      <input type="number" [(ngModel)]="donatedMoney" value="{{suggestionMoney}}" name="category" class="full-width" placeholder="Donate money" />
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="donate()">OK</button>
+    <button type="button" class="btn btn-primary" (click)="dismiss()">Cancel</button>
+  </div>
+</clr-modal>

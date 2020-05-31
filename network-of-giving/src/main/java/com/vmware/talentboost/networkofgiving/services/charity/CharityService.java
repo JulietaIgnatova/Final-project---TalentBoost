@@ -6,6 +6,8 @@ import com.vmware.talentboost.networkofgiving.repositories.charity.ICharityRepos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,12 +110,22 @@ public class CharityService implements ICharityService {
         repository.participateInCharity(charity, userId);
     }
 
-       @Override
-        public List<Charity> getFilteredCharitiesByTitle(String filter) {
+    @Override
+    public List<Charity> getFilteredCharitiesByTitle(String filter) {
         return getAllCharities().stream().filter(
                 charity -> {
                     return charity.getTitle().toLowerCase().contains(filter.toLowerCase());
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public Double getSuggestionForDonation(Charity charity, int userId) {
+        double suggestion = repository.getSuggestionForDonation(userId);
+        double neededMoney = charity.getBudgetRequired()-charity.getAmountCollected();
+        if(suggestion > neededMoney){
+            return new BigDecimal(neededMoney).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        }
+        return new BigDecimal(suggestion).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
 }

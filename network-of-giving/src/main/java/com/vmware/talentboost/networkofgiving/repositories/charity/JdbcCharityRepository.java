@@ -105,6 +105,11 @@ public class JdbcCharityRepository implements ICharityRepository {
         updateCharity(charity.getTitle(),charity);
     }
 
+    @Override
+    public Double getSuggestionForDonation(int userId) {
+        return jdbcTemplate.queryForObject("SELECT AVG(donated_money) FROM DONATORS WHERE user_id = ?", Double.class,userId);
+    }
+
     private void addDonater(int userId, int chariryId, double money) {
         jdbcTemplate.update("INSERT INTO DONATORS(user_id, charity_id, donated_money) VALUES(?, ?, ?)", userId, chariryId, money);
     }

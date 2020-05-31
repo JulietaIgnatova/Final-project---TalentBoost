@@ -81,13 +81,14 @@ public class UserService implements IUserService {
         }
         return repository.getAllCreatedCharities(username);
     }
+
     @Override
     public User login(LoginForm loginForm) {
         if (!repository.checkUser(loginForm.getUsername())) {
             throw new IllegalArgumentException("Invalid username");
         }
         User user = repository.getUser(loginForm.getUsername());
-        if(!passwordEncoder.matches(loginForm.getPassword(), user.getPassword())){
+        if (!passwordEncoder.matches(loginForm.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("Invalid password");
         }
         return user;

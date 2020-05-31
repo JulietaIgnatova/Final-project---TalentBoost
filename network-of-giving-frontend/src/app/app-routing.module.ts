@@ -7,6 +7,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ViewCharityComponent } from './components/view-charity/view-charity.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AuthGuard } from './_helpers/auth.guard';
 
 
 const routes: Routes = [
@@ -28,11 +29,13 @@ const routes: Routes = [
   },
   {
     path: "createCharity",
-    component: CreateCharityComponent
+    component: CreateCharityComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "profile",
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   
 ]

@@ -1,6 +1,5 @@
 package com.vmware.talentboost.networkofgiving.util.maprow;
 
-import com.vmware.talentboost.networkofgiving.models.Charity;
 import com.vmware.talentboost.networkofgiving.models.User;
 import org.springframework.jdbc.core.RowMapper;
 

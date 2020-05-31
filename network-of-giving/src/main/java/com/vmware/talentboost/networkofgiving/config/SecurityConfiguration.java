@@ -26,10 +26,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String encode = bCryptPasswordEncoder.encode("123456");
-        System.out.println(encode);
-
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, 1 from users where username=?")
@@ -42,8 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/api/v1/charities/*").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/v1/users/" ).permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/charities/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/users/").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/users/login/").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic();

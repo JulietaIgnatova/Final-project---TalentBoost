@@ -26,5 +26,7 @@ public interface ICharityService {
 
     void participateInCharity(Charity charity, int userId);
 
-     List<Charity> getFilteredCharitiesByTitle(String filter);
+    List<Charity> getFilteredCharitiesByTitle(String filter);
+
+    Double getSuggestionForDonation(Charity charity, int userId);
 }

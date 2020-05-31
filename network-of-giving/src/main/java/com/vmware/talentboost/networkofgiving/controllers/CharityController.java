@@ -97,6 +97,13 @@ public class CharityController {
         return charityService.getFilteredCharitiesByTitle(title);
     }
 
+
+    @PostMapping(path = "/suggestion/{userId}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public double getSuggestionForDonation(@RequestBody @Valid Charity charity, @PathVariable("userId") int userId){
+      return charityService.getSuggestionForDonation(charity,userId);
+    }
+
+
     @ExceptionHandler(EmptyResultDataAccessException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void userNotFoundExceptionHandler() {
