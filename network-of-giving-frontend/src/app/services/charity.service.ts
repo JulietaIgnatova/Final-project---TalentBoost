@@ -44,6 +44,7 @@ export class CharityService {
 
  
   createCharityWithImage(charityFormData){
+    
     return this.http.post<any>(`${environment.apiUrl}/charities/`,charityFormData);
   }
 

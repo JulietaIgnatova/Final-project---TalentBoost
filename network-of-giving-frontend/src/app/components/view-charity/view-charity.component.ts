@@ -127,6 +127,7 @@ export class ViewCharityComponent implements OnInit, OnDestroy {
         data => {
           this.ngOnInit()
           this.showSuccessMessage=true;
+          
           this.successMessage=`You have successfully donated ${this.donatedMoney} in the charity!`;
         },
         err => {

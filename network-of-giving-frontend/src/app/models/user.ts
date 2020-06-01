@@ -8,5 +8,6 @@ export class User {
     gender: string;
     location: string;
     role: Role;
-    token?:string;
+    name:string
+
 }

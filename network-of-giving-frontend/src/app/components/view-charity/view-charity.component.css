@@ -6,6 +6,8 @@
 }
 .container1 {
   padding: 30px;
+  display: flex;
+  flex-direction: column;
 }
 img {
     width: 400px;

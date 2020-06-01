@@ -30,8 +30,9 @@
   <button class="btn btn=primary">Edit</button>
   <button class="btn btn-primary" (click)="onDelete(charity.title)">Delete</button>
 </div>
+
 <div class="container1" *ngIf="charity">
-<section id="a-1">
+
   <h1><strong>{{charity.title}}</strong></h1>
     <div class="charity-info">
       <img [src]="'data:image/png;base64,' + charity.imageBase64" alt="">
@@ -42,9 +43,22 @@
           <strong _ngcontent-c2="">{{"Participants required:"}} </strong> {{charity.volunteersRequired}} <strong>{{"/ "}}</strong>
           <strong _ngcontent-c2="">{{"Participants signed up: "}} </strong>{{charity.volunteersSignedUp}} 
         </p>
-        <div *ngIf="currentUser">
-        <button class="btn btn-primary" (click)="donatePopUp()">Donate</button>
-        <button class="btn btn=primary" (click)="volunteerPopUp()">Volunteer</button>
+        <div *ngIf="currentUser" >
+        <button class="btn btn-primary" (click)="donatePopUp()" *ngIf="charity.amountCollected != charity.budgetRequired; else collected">Donate</button>
+        <button class="btn btn=primary" (click)="volunteerPopUp()" *ngIf="charity.volunteersSignedUp != charity.volunteersRequired; else signedUp">Volunteer</button>
+
+         <ng-template #collected>
+          <div class="header-actions">
+              <h4 style="color: darkgreen;">All required money are collected! </h4>
+          </div>
+        </ng-template>
+
+        <ng-template #signedUp>
+          <div class="header-actions">
+              <h4 style="color: darkgreen;"> No more volunteers are required!</h4>
+          </div>
+        </ng-template>
+
         </div>
       </div>
     </div>
@@ -53,7 +67,7 @@
     {{charity.description}}
   </p>
   <br>
-</section>
+
 </div>
 
 <clr-modal [(clrModalOpen)]="volunteerModal" [clrModalClosable]="true" *ngIf="charity">
@@ -78,3 +92,16 @@
     <button type="button" class="btn btn-primary" (click)="dismiss()">Cancel</button>
   </div>
 </clr-modal>
+
+
+<!-- delete modal  -->
+<!-- <clr-modal [(clrModalOpen)]="open" [clrModalClosable]="true" *ngIf="charity">
+  <h3 class="modal-title">Delete charity</h3>
+  <div class="modal-body">
+      <h4>Are you sure you want to delete this charity?</h4>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="onBtn('Cancel');open=false;">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="onBtn('OK');open=false;">Yes</button>
+  </div>
+</clr-modal> -->

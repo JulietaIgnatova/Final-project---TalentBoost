@@ -12,7 +12,7 @@
 </div>
 
 <form class ="createChariry" clrForm [formGroup]="charityForm" (ngSubmit)="submitCharity()">
-
+    <h3><strong>Create charity form:</strong> </h3><br>
     <clr-input-container>
         <label>Title</label>
         <input clrInput type="text" formControlName="title" />
@@ -46,7 +46,9 @@
         </div>
     </div>
 
+    <div class="createBtn">
     <button type="submit" class="btn btn-primary" >Create</button>
+    </div>
     
 </form>
 

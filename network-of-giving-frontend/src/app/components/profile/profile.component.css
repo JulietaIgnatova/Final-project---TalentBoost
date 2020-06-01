@@ -1,0 +1,87 @@
+.card-block{
+    height: 140px;
+}
+
+.clr-row {
+    padding-right: 80px;
+    padding-left: 80px; 
+    padding-top: 15px;
+    padding-bottom: 50px;
+}
+
+  .card-header{
+    font-weight: bold;
+    overflow: auto;
+  }
+
+  .card-text{
+    color: black;
+  }
+
+  p {
+    width:  250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+  }
+  .card-img{
+    height: 300px;
+    width: 323px; 
+    overflow: auto;
+  }
+  .card{
+    overflow: auto;
+    resize: both;
+  }
+
+  .card-text{
+    bottom: 8px;
+    left: 16px;
+    font-weight: bold;
+    overflow: auto;
+  }
+
+.create{
+  padding-left: 140px;
+  padding-top: 30px;
+}
+
+.containerProfileInfo {
+  padding-top: 20px;
+  font-size: 170%;
+  padding-bottom: 30px;
+}
+.profileText{
+  font-size: 70%;
+  color: black;
+}
+
+.headers{
+  padding-left: 140px;
+  padding-top: 20px;
+}
+
+
+clr-accordion {
+  max-width: 1200px;
+}
+
+.allIn {
+  padding-left: 90px;
+  
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-container > div {
+   padding-left: 60px;
+  padding-right: 60px;
+}
+
+clr-accordion-title{
+  color: black;
+}
