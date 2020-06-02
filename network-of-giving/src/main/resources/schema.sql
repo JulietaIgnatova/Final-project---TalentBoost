@@ -4,6 +4,10 @@ DROP TABLE IF EXISTS Charities;
 
 DROP TABLE IF EXISTS Participants;
 
+DROP TABLE IF EXISTS Donators;
+
+DROP TABLE IF EXISTS Useractions;
+
 CREATE TABLE IF NOT EXISTS Users(
     id INT IDENTITY PRIMARY KEY,
     name VARCHAR(128) NOT NULL,
@@ -36,13 +40,14 @@ CREATE TABLE IF NOT EXISTS Donators(
     user_id INT,
     charity_id INT,
     donated_money DECIMAL
-)
+);
 
---CREATE TABLE IF NOT EXISTS USERACTONS(
---   user_id INT,
---   description VARCHAR(4096),
---   date ti
---)
+
+CREATE TABLE IF NOT EXISTS Useractions(
+   user_id INT,
+   description VARCHAR(4096),
+   charity_title VARCHAR(128)
+);
 
 --ALTER TABLE Charities ADD CONSTRAINT FK_USER_ID FOREIGN
 --KEY (id) REFERENCES Users(id)  ON DELETE CASCADE;

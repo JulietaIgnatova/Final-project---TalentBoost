@@ -171,11 +171,13 @@ public class CharityControllerTest {
 
     @Test
     public void testDeleteExistingCharity() {
-        HttpEntity<String> request = new HttpEntity<String>(headers);
-        final String title = "save the world";
-        final String deleteUrl = url + "/" + title;
+        final Charity expected = new Charity(1, 1, "save the world", "we are going to clean the world", 10000, 200, 20, 10);
 
-        ResponseEntity<Void> responseEntity = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, request, Void.class);
+        HttpEntity<Charity> request = new HttpEntity<>(expected,headers);
+        final String title = "save the world";
+        final String postUrl = url + "/" + title;
+
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(postUrl, HttpMethod.POST, request, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.NO_CONTENT, responseStatus);
@@ -183,11 +185,13 @@ public class CharityControllerTest {
 
     @Test
     public void testDeleteNonExistingCharity() {
-        HttpEntity<String> request = new HttpEntity<String>(headers);
-        final String title = "save the world today";
-        final String deleteUrl = url + "/" + title;
+        final Charity expected = new Charity(1, 1, "save the world today", "we are going to clean the world", 10000, 200, 20, 10);
 
-        ResponseEntity<Void> responseEntity = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, request, Void.class);
+        HttpEntity<Charity> request = new HttpEntity<>(expected,headers);
+        final String title = "save the world today";
+        final String postUrl = url + "/" + title;
+
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(postUrl, HttpMethod.POST, request, Void.class);
         HttpStatus responseStatus = responseEntity.getStatusCode();
 
         assertEquals(HttpStatus.BAD_REQUEST, responseStatus);

@@ -139,8 +139,6 @@ public class UserControllerTest {
         final String putUrl = url + "/" + username;
         final User expected = new User(1, "Maria", username, 25, "F", "Plovdiv");
         expected.setPassword("123456");
-        ObjectMapper mapper = new ObjectMapper();
-        String userAsJson = mapper.writeValueAsString(expected);
 
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<User> requestUpdate = new HttpEntity<>(expected, headers);

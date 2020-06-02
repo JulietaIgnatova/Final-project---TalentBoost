@@ -32,6 +32,13 @@ CREATE TABLE IF NOT EXISTS Donators(
     donated_money DECIMAL
 );
 
+CREATE TABLE IF NOT EXISTS Useractions(
+   user_id INT,
+   description VARCHAR(4096),
+   charity_title VARCHAR(128),
+   action_date timestamp default now()
+);
+
 INSERT INTO Users (name,username,age,gender,location, password,role)
 VALUES
 ('Maria','maria',21,'F','Sofia','$2a$10$qW/B129pg21XPYR6XA8B.OQg4UGsYesbRpYPdgt9rhzxWWMn11bHC','ROLE_USER'),
