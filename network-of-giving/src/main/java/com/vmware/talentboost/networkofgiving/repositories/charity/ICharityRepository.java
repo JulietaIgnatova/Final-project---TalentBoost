@@ -1,6 +1,7 @@
 package com.vmware.talentboost.networkofgiving.repositories.charity;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
+import com.vmware.talentboost.networkofgiving.models.Donation;
 import com.vmware.talentboost.networkofgiving.models.User;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface ICharityRepository {
 
     List<User> getParticipantsForCharity(String title);
 
-    List<User> getDonationsForCharity(String title);
+    List<User> getAllUserDonationsForCharity(String title);
 
     User getCreatorForCharity(String title);
 
@@ -29,4 +30,8 @@ public interface ICharityRepository {
     void participateInCharity(Charity charity, int userId);
 
     Double getSuggestionForDonation(int userId);
+
+
+    List<Donation> getDonationsForCharity(String title);
+
 }

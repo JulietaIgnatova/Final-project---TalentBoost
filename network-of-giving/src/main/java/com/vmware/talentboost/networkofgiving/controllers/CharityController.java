@@ -57,10 +57,10 @@ public class CharityController {
         charityService.updateCharity(title, charity);
     }
 
-    @DeleteMapping("/{title}")
+    @PostMapping("/{title}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCharity(@PathVariable("title") String title) {
-        charityService.deleteCharity(title);
+    public void deleteCharity(@PathVariable("title") String title,@RequestBody @Valid Charity charity) {
+        charityService.deleteCharity(charity,title);
     }
 
 

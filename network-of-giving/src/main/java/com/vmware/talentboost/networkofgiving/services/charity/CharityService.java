@@ -1,8 +1,12 @@
 package com.vmware.talentboost.networkofgiving.services.charity;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
+import com.vmware.talentboost.networkofgiving.models.Donation;
 import com.vmware.talentboost.networkofgiving.models.User;
+import com.vmware.talentboost.networkofgiving.models.UserAction;
 import com.vmware.talentboost.networkofgiving.repositories.charity.ICharityRepository;
+import com.vmware.talentboost.networkofgiving.repositories.useraction.IUserActionRepository;
+import com.vmware.talentboost.networkofgiving.util.format.UserActivityFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +18,12 @@ import java.util.stream.Collectors;
 @Component
 public class CharityService implements ICharityService {
     private final ICharityRepository repository;
+    private final IUserActionRepository actionRepository;
 
     @Autowired
-    public CharityService(ICharityRepository repository) {
+    public CharityService(ICharityRepository repository, IUserActionRepository actionRepository) {
         this.repository = repository;
+        this.actionRepository = actionRepository;
     }
 
     @Override
@@ -37,6 +43,9 @@ public class CharityService implements ICharityService {
 
         repository.addCharity(charity);
 
+        String describeAction = String.format(UserActivityFormat.CREATED_ACTION, charity.getTitle());
+        actionRepository.addUserAction(new UserAction(charity.getCreatorId(), describeAction, charity.getTitle()));
+
     }
 
     @Override
@@ -49,13 +58,22 @@ public class CharityService implements ICharityService {
     }
 
     @Override
-    public void deleteCharity(String title) {
+    public void deleteCharity(Charity charity, String title) {
+        System.out.println("helloo");
         if (!repository.checkCharity(title)) {
             throw new IllegalArgumentException("Invalid arguments");
         }
 
+        List<Donation> donationsForCharity = repository.getDonationsForCharity(title);
+        List<User> participantsForCharity = repository.getParticipantsForCharity(title);
+
         repository.deleteCharity(title);
 
+        String describeAction = String.format(UserActivityFormat.DELETED_ACTION, charity.getTitle());
+        actionRepository.addUserAction(new UserAction(charity.getCreatorId(), describeAction, charity.getTitle()));
+
+        giveMoneyBackAfterDeletion(donationsForCharity, charity);
+        notifyParticipantsAfterDeletion(participantsForCharity, charity);
     }
 
     @Override
@@ -71,7 +89,7 @@ public class CharityService implements ICharityService {
         if (!repository.checkCharity(title)) {
             throw new IllegalArgumentException("Invalid arguments");
         }
-        return repository.getDonationsForCharity(title);
+        return repository.getAllUserDonationsForCharity(title);
     }
 
     @Override
@@ -93,7 +111,13 @@ public class CharityService implements ICharityService {
         }
 
         repository.donateMoneyForCharity(charity, userId, money);
+
+        String describeAction = String.format(UserActivityFormat.DONATE_ACTION, money, charity.getTitle());
+        actionRepository.addUserAction(new UserAction(userId, describeAction, charity.getTitle()));
+
+        checkIfMoneyAreCollected(charity, newCollectedMoney);
     }
+
 
     @Override
     public void participateInCharity(Charity charity, int userId) {
@@ -108,7 +132,13 @@ public class CharityService implements ICharityService {
             //think for better exception
         }
         repository.participateInCharity(charity, userId);
+
+        String describeAction = String.format(UserActivityFormat.PARTICIPATE_ACTION, charity.getTitle());
+        actionRepository.addUserAction(new UserAction(userId, describeAction, charity.getTitle()));
+
+        checkIfAllVolunteersAreGathered(charity, newVolunteersCount);
     }
+
 
     @Override
     public List<Charity> getFilteredCharitiesByTitle(String filter) {
@@ -121,11 +151,45 @@ public class CharityService implements ICharityService {
     @Override
     public Double getSuggestionForDonation(Charity charity, int userId) {
         double suggestion = repository.getSuggestionForDonation(userId);
-        double neededMoney = charity.getBudgetRequired()-charity.getAmountCollected();
-        if(suggestion > neededMoney){
+        double neededMoney = charity.getBudgetRequired() - charity.getAmountCollected();
+        if (suggestion > neededMoney) {
             return new BigDecimal(neededMoney).setScale(2, RoundingMode.HALF_UP).doubleValue();
         }
         return new BigDecimal(suggestion).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
+
+    private void notifyParticipantsAfterDeletion(List<User> participantsForCharity, Charity charity) {
+        for (User user : participantsForCharity) {
+            String describeAction = String.format(UserActivityFormat.NOTIFY_PARTICIPANTS, charity.getTitle());
+            actionRepository.addUserAction(new UserAction(user.getId(), describeAction, charity.getTitle()));
+        }
+    }
+
+    private void giveMoneyBackAfterDeletion(List<Donation> donationsForCharity, Charity charity) {
+        for (Donation donation : donationsForCharity) {
+            String describeAction = String.format(UserActivityFormat.GIVE_MONEY_BACK, donation.getMoney(), charity.getTitle());
+            actionRepository.addUserAction(new UserAction(donation.getUserId(), describeAction, charity.getTitle()));
+        }
+    }
+
+    private void checkIfMoneyAreCollected(Charity charity, double newCollectedMoney) {
+        if (newCollectedMoney == charity.getBudgetRequired()) {
+            List<Donation> donationsForCharity = repository.getDonationsForCharity(charity.getTitle());
+            for (Donation donation : donationsForCharity) {
+                String describeAction = String.format(UserActivityFormat.COLLECTED_ALL_MONEY, charity.getTitle());
+                actionRepository.addUserAction(new UserAction(donation.getUserId(), describeAction, charity.getTitle()));
+            }
+        }
+    }
+
+    private void checkIfAllVolunteersAreGathered(Charity charity, int newVolunteersCount) {
+        if(charity.getVolunteersRequired() == newVolunteersCount){
+            List<User> participantsForCharity = repository.getParticipantsForCharity(charity.getTitle());
+            for(User user: participantsForCharity) {
+                String describeAction = String.format(UserActivityFormat.GET_ALL_VOLUNTEERS, charity.getTitle());
+                actionRepository.addUserAction(new UserAction(user.getId(), describeAction, charity.getTitle()));
+            }
+        }
+    }
 }

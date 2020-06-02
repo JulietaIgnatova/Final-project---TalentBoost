@@ -1,6 +1,7 @@
 package com.vmware.talentboost.networkofgiving.repositories.charity;
 
 import com.vmware.talentboost.networkofgiving.models.Charity;
+import com.vmware.talentboost.networkofgiving.models.Donation;
 import com.vmware.talentboost.networkofgiving.models.User;
 import com.vmware.talentboost.networkofgiving.util.maprow.CharityMapRower;
 import com.vmware.talentboost.networkofgiving.util.maprow.DonatorMapRower;
@@ -71,7 +72,7 @@ public class JdbcCharityRepository implements ICharityRepository {
     }
 
     @Override
-    public List<User> getDonationsForCharity(String title) {
+    public List<User> getAllUserDonationsForCharity(String title) {
 
         return jdbcTemplate.query("SELECT * FROM USERS WHERE id IN " +
                 "(SELECT user_id FROM CHARITIES JOIN DONATORS ON id = charity_id WHERE TITLE = ?)", new UserMapRower(), title);
@@ -107,7 +108,17 @@ public class JdbcCharityRepository implements ICharityRepository {
 
     @Override
     public Double getSuggestionForDonation(int userId) {
-        return jdbcTemplate.queryForObject("SELECT AVG(donated_money) FROM DONATORS WHERE user_id = ?", Double.class,userId);
+        Double result =jdbcTemplate.queryForObject("SELECT AVG(donated_money) FROM DONATORS WHERE user_id = ?", Double.class,userId);
+        if(result == null){
+            return Double.valueOf(20);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Donation> getDonationsForCharity(String title) {
+        return jdbcTemplate.query("SELECT user_id, charity_id, SUM(donated_money) as donated_money FROM Donators JOIN charities ON charity_id=id" +
+                " where title=? GROUP BY user_id, charity_id", new DonatorMapRower(), title);
     }
 
     private void addDonater(int userId, int chariryId, double money) {

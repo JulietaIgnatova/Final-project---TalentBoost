@@ -27,6 +27,6 @@ public class JdbcUserActionRepository implements IUserActionRepository {
 
     @Override
     public void addUserAction(UserAction userAction) {
-        jdbcTemplate.update("INSERT INTO USERACTIONS(user_id,description) VALUES(?,?)", userAction.getUserId(), userAction.getDescription());
+        jdbcTemplate.update("INSERT INTO USERACTIONS(user_id,description,charity_title) VALUES(?,?,?)", userAction.getUserId(), userAction.getDescription(), userAction.getCharityTitle());
     }
 }

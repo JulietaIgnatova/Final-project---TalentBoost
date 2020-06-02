@@ -7,6 +7,24 @@ public class UserAction {
     private String description;
     private OffsetDateTime actionDate;
     private String formattedActionDate;
+    private String charityTitle;
+
+    public UserAction() {
+    }
+
+    public UserAction(int userId, String description, String charityTitle) {
+        this.userId = userId;
+        this.description = description;
+        this.charityTitle = charityTitle;
+    }
+
+    public String getCharityTitle() {
+        return charityTitle;
+    }
+
+    public void setCharitTitle(String charityTitle) {
+        this.charityTitle = charityTitle;
+    }
 
     public String getFormattedActionDate() {
         return formattedActionDate;

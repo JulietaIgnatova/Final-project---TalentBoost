@@ -19,6 +19,7 @@ public class UserActionMapRower implements RowMapper<UserAction> {
 
         result.setDescription((rs.getString("description")));
         result.setUserId(rs.getInt("user_id"));
+        result.setCharitTitle(rs.getString("charity_title"));
         OffsetDateTime actionDate = rs.getObject("action_date", OffsetDateTime.class);
         actionDate = actionDate.toInstant().atOffset(ZoneOffset.of(zoneOffset));
         result.setActionDate(actionDate);

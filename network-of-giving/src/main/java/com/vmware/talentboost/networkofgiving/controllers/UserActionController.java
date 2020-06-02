@@ -27,7 +27,7 @@ public class UserActionController {
 
     @GetMapping("/{id}")
     public List<UserAction>  getLatestActivitiesForUser(@PathVariable("id") int userId,@RequestParam(name = "limit",defaultValue = "20",required = false) int limit) {
-        return userActionService.getLatestActivities(limit);
+        return userActionService.getLatestActivitiesForUser(userId,limit);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
