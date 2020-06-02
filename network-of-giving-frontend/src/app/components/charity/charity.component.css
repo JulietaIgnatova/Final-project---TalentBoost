@@ -1,12 +1,12 @@
 .card-block{
-  height: 140px;
+  height: 150px;
 }
-/* .clr-row {
+.clr-row {
   padding-right: 140px;
   padding-left: 140px;
   padding-top: 10px;
   padding-bottom: 50px;
-} */
+}
 .card-header{
   font-weight: bold;
   overflow: auto;
@@ -22,7 +22,7 @@ p {
 }
 .card-img{
   height: 300px;
-  /* width: 323px;  */
+  width: 323px; 
   overflow: auto;
 }
 .card{
@@ -39,13 +39,14 @@ p {
 padding-left: 140px;
 padding-top: 30px;
 }
+.flex-container > div {
+ padding-left: 60px;
+ padding-right: 60px;
+}
 
 .flex-container {
   display: flex;
   flex-direction: column;
+  padding-bottom: 50px;
 }
 
-.flex-container > div {
-   padding-left: 150px;
-  padding-right: 150px;
-}

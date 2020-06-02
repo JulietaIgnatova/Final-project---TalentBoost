@@ -23,12 +23,16 @@ export class ViewCharityComponent implements OnInit, OnDestroy {
   showAlertMessage=false;
   showSuccessMessage=false;
 
+  noExistingCharity=false;
+
   //for donation
   donateModal=false;
   suggestionMoney=0;
   donatedMoney:number;
   successMessage:string;
   alertMessage: string;
+
+ 
 
   constructor(
      private charityService: CharityService,
@@ -53,7 +57,7 @@ export class ViewCharityComponent implements OnInit, OnDestroy {
     ModalComponent.openClose.next(true);
     this.subscription = ModalComponent.onBtn.pipe(take(1))
       .subscribe(v => {
-        v === 'OK' && this.charityService.deleteCharity(title).subscribe(
+        v === 'OK' && this.charityService.deleteCharity(this.charity,title).subscribe(
           res => {
             this.router.navigate(['/']);
             return true;
@@ -83,7 +87,10 @@ export class ViewCharityComponent implements OnInit, OnDestroy {
         this.suggestionMoney = data;
         this.donatedMoney = data;
       },
-      err => console.log(err)
+      err => {
+        console.log(err)
+        this.noExistingCharity=true;
+      }
     )
   }
 
@@ -93,6 +100,7 @@ export class ViewCharityComponent implements OnInit, OnDestroy {
       data => {
         this.ngOnInit()
          this.showSuccessMessage=true;
+         this.showAlertMessage=false;
          this.successMessage="You have successfully participated in the charity!";
       },
       err => {

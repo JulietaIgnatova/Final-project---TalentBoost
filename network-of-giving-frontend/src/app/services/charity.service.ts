@@ -48,8 +48,9 @@ export class CharityService {
     return this.http.post<any>(`${environment.apiUrl}/charities/`,charityFormData);
   }
 
-  deleteCharity(title: string): Observable<boolean> {
-     return this.http.delete<any>(`${environment.apiUrl}/charities/${title}`);
+  deleteCharity(charity: Charity,title: string): Observable<boolean> {
+    let body = JSON.stringify(charity); 
+     return this.http.post<any>(`${environment.apiUrl}/charities/${title}`,body,requestOptions);
   }
 
   participateInCharity(charity: Charity, userId: number): Observable<boolean> {

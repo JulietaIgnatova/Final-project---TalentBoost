@@ -6,7 +6,6 @@
           </div>
           <span class="alert-text">
               {{alertMessage}}
-              <nav><a href="/profile"> Check profile page!</a></nav>
           </span>
       </div>
   </div>
@@ -19,12 +18,26 @@
               <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
           </div>
           <span class="alert-text">
-             <!-- You have successfully participated for this charity! -->
              {{successMessage}}
           </span>
       </div>
   </div>
 </div>
+
+<div class="alert alert-danger" role="alert" *ngIf="noExistingCharity">
+  <div class="alert-items">
+      <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+          </div>
+          <span class="alert-text">
+             This charity has been deleted!
+             <nav><a href="/profile">Check profile page!</a></nav>
+          </span>
+      </div>
+  </div>
+</div>
+
 
 <div class="container" *ngIf="charity && currentUser && currentUser.id == charity.creatorId">
   <button class="btn btn=primary">Edit</button>

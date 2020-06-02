@@ -5,11 +5,13 @@ import { UserService } from 'src/app/services/user.service';
 import { Charity } from 'src/app/models/charity';
 import { mergeMap } from 'rxjs/operators';
 import { UserAction } from 'src/app/models/useraction';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
+
 export class ProfileComponent implements OnInit {
   currentUser: User;
   allParticipatedCharities: Charity[];

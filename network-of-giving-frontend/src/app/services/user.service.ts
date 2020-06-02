@@ -16,15 +16,19 @@ export class UserService {
     let body = JSON.stringify(userForm.value);
     return this.http.post(`${environment.apiUrl}/users/`, body, {headers})
   }
+  
   getUser(username){
     return this.http.get<User>(`${environment.apiUrl}/users/${username}`);
   }
+
   getAllParticipatedCharity(username: string): Observable<Charity[]> {
     return this.http.get<any>(`${environment.apiUrl}/users/${username}/charities/participated`);
   }
+
   getAllDonatedCharity(username: string): Observable<Charity[]> {
     return this.http.get<any>(`${environment.apiUrl}/users/${username}/charities/donated`);
   }
+
   getAllCreatedCharity(username: string): Observable<Charity[]> {
     return this.http.get<any>(`${environment.apiUrl}/users/${username}/charities/created`);
   }

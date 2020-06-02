@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 })
 export class RegisterComponent implements OnInit {
    registerForm: FormGroup
+   invalidRegister = false;
+
   constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -19,8 +21,8 @@ export class RegisterComponent implements OnInit {
       username: new FormControl('',Validators.required),
       password: new FormControl('',Validators.required),
       name: new FormControl('',Validators.required),
-      age: new FormControl('',Validators.required),
-      gender: new FormControl(''),
+      age: new FormControl('',[Validators.min(0), Validators.max(100), Validators.minLength(1), Validators.maxLength(3)]) ,
+     gender: new FormControl(''),
       location: new FormControl('')
     })
   }
@@ -44,11 +46,13 @@ export class RegisterComponent implements OnInit {
           return true;
         },
         error => {
+          this.invalidRegister = true;
           return Observable.throw(error)
         }
       )
 
     }
+
   }
 
   onLogin(){

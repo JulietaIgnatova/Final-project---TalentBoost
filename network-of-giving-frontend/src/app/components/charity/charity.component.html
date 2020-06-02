@@ -1,12 +1,13 @@
 <div class="flex-container">
-<div class="create"  *ngIf="currentUser">
-<a href="/createCharity" class="btn btn-primary btn-icon" >
-    <clr-icon shape="plus"></clr-icon>
-    Create
-</a>
-</div>
+    <div class="allInfo">
+     <div class="create"  *ngIf="currentUser">
+        <a href="/createCharity" class="btn btn-primary btn-icon" >
+          <clr-icon shape="plus"></clr-icon>
+             Create
+        </a>
+    </div>
 
-<div class="clr-row">
+  <div class="clr-row">
     <div class="clr-col-sm-4 clr-col-md-4" *ngFor='let charity of charities'>
             <div class="card" >
                 <div class="card-header">
@@ -34,6 +35,7 @@
                </div>
             </div>
             
-    </div>
-</div>
+      </div>
+   </div>
+ </div>
 </div>

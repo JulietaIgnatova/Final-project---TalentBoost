@@ -13,9 +13,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup
   returnUrl: string;
-  submitted = false;
-  loading = false;
-  error = '';
+  invalidLogin = false;
 
   constructor(private router: Router, private auth: AuthenticationService,private route: ActivatedRoute ){ 
     if (this.auth.currentUserValue) { 
@@ -32,12 +30,10 @@ export class LoginComponent implements OnInit {
   }
  
   submitLogin(){
-    this.submitted = true;
-
     if (this.loginForm.invalid) {
           return;
      }
-     this.loading = true;
+    
 
      this.auth.login(this.loginForm.get("username").value, this.loginForm.get("password").value)
      .pipe(first())
@@ -46,8 +42,8 @@ export class LoginComponent implements OnInit {
              this.router.navigate([this.returnUrl]);
          },
          error => {
-             this.error = error;
-             this.loading = false;
+          this.invalidLogin=true;
+             console.log(error);
          });
   }
 

@@ -19,7 +19,7 @@
 
    <div class="listCards">
     <clr-accordion>
-        <clr-accordion-panel >
+        <clr-accordion-panel *ngIf="allCreatedCharities" >
           <clr-accordion-title>My charities: {{allCreatedCharities.length}}</clr-accordion-title>
           <clr-accordion-content *clrIfExpanded>
             <div class="clr-row">
@@ -49,7 +49,7 @@
           </clr-accordion-content>
         </clr-accordion-panel>
       
-        <clr-accordion-panel>
+        <clr-accordion-panel *ngIf="allParticipatedCharities">
           <clr-accordion-title>Participated charities: {{allParticipatedCharities.length}}</clr-accordion-title>
           <clr-accordion-content *clrIfExpanded>
             <div class="clr-row">
@@ -79,7 +79,7 @@
         </clr-accordion-content>
         </clr-accordion-panel>
       
-        <clr-accordion-panel>
+        <clr-accordion-panel *ngIf="allDonatedCharities">
           <clr-accordion-title>Donated charities: {{allDonatedCharities.length}}</clr-accordion-title>
           <clr-accordion-content *clrIfExpanded>
             <div class="clr-row">
@@ -113,7 +113,9 @@
             <clr-accordion-title>Latest Activities</clr-accordion-title>
             <clr-accordion-content *clrIfExpanded>
                 <div class="actions" *ngFor='let action of latestUserActions'>
-                <strong>{{action.formattedActionDate}}</strong> {{action.description}}<br>
+                <a href="/charity/view/{{action.charityTitle}}"> 
+                    <h6><strong>{{action.formattedActionDate}}:</strong> {{action.description}}<br></h6>
+                </a>
                 </div>
             </clr-accordion-content>
           </clr-accordion-panel>
@@ -122,105 +124,4 @@
 </div>
 
 
-      <!-- <div class="clr-row">
-        <div class="clr-col-sm-4 clr-col-md-4" *ngFor='let action of latestUserActions'>
-                <div class="card" >
-                    <div class="card-block">
-                        <div class="card-text" >       
-                          {{action.formattedActionDate}} " " {{action.description}}<br>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div> -->
-
- <!-- <div class="container">
-    <section id="a-1">
-         <h3 style="color:darkblue;" class="headers"><strong>My charities:</strong></h3>
-        <div class="clr-row">
-         <div class="clr-col-sm-3 clr-col-md-3" *ngFor='let charity of allCreatedCharities'>
-                <div class="card" >
-                    <div class="card-header">
-                    {{charity.title}}
-                    </div>
-                    <div class="card-img">
-                        <img [src]="'data:image/png;base64,' + charity.imageBase64" alt=""/>
-                    </div>
-                    <div class="card-block">
-                        <div class="card-text1" >
-                            <p> {{charity.description}} </p>
-                        </div>
-                        <div class="card-text" >       
-                          {{"Amount required:"}}  {{charity.budgetRequired}}<br>
-                          {{"Amount collected:"}} {{charity.amountCollected}}
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a [routerLink]="['/charity/view', charity.title]" class="btn btn-sm btn-link">See more</a>
-                   </div>
-                </div>
-        </div>
-       </div>
-</section>
-</div>
-
-<div class="container">
-    <section id="a-1">
-         <h3 style="color:darkblue;" class="headers"><strong>Participated charities:</strong></h3>
-        <div class="clr-row">
-           <div class="clr-col-sm-3 clr-col-md-3" *ngFor='let charity of allParticipatedCharities'>
-            <div class="card" >
-                <div class="card-header">
-                {{charity.title}}
-                </div>
-                <div class="card-img">
-                    <img [src]="'data:image/png;base64,' + charity.imageBase64" alt=""/>
-                </div>
-                <div class="card-block">
-                    <div class="card-text1" >
-                        <p> {{charity.description}} </p>
-                    </div>
-                    <div class="card-text" >       
-                      {{"Amount required:"}}  {{charity.budgetRequired}}<br>
-                      {{"Amount collected:"}} {{charity.amountCollected}}
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a [routerLink]="['/charity/view', charity.title]" class="btn btn-sm btn-link">See more</a>
-               </div>
-            </div>
-    </div>
-</div>
-</section>
-</div>
-
-
-<div class="container">
-    <section id="a-1">
-         <h3 style="color:darkblue;" class="headers"><strong>Donated charities:</strong></h3>
-        <div class="clr-row">
-          <div class="clr-col-sm-3 clr-col-md-3" *ngFor='let charity of allDonatedCharities'>
-            <div class="card" >
-                <div class="card-header">
-                {{charity.title}}
-                </div>
-                <div class="card-img">
-                    <img [src]="'data:image/png;base64,' + charity.imageBase64" alt=""/>
-                </div>
-                <div class="card-block">
-                    <div class="card-text1" >
-                        <p> {{charity.description}} </p>
-                    </div>
-                    <div class="card-text" >       
-                      {{"Amount required:"}}  {{charity.budgetRequired}}<br>
-                      {{"Amount collected:"}} {{charity.amountCollected}}
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a [routerLink]="['/charity/view', charity.title]" class="btn btn-sm btn-link">See more</a>
-               </div>
-            </div>
-    </div>
-  </div>
-</section>
-</div> -->
+    
