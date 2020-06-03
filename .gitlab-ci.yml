@@ -7,15 +7,23 @@ stages:
 before_script:
   - echo "Starting NetworkOfGiving CI/CD pipeline"
 
-buildPrj:
+build-backend:
     stage: build
     script: 
         - cd network-of-giving
         - mvn clean compile
 
-testingPrj:
+testing-backend:
     stage: testing
     script:
         - cd network-of-giving
         - mvn clean install
+
+build-frontend:
+  stage: build
+  image: trion/ng-cli
+  before_script:
+      - cd network-of-giving-frontend
+  script:
+      - ng build
 
