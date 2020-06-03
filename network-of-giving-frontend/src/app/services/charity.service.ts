@@ -68,4 +68,10 @@ export class CharityService {
     return this.http.post<number>(`${environment.apiUrl}/charities/suggestion/${userId}`, body,requestOptions);
    }
 
+
+  updateCharity(charity: Charity, title: string) {
+   let body = JSON.stringify(charity);
+   return this.http.put<any>(`${environment.apiUrl}/charities/${title}`, body, requestOptions);
+  }
+
 }

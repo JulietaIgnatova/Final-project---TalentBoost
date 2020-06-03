@@ -1,0 +1,26 @@
+<form class="editCharity" clrForm *ngIf="currentUser && charity" (ngSubmit)="editCharity()">
+    <h3><strong>Edit charity form:</strong></h3>
+    <br />
+    <clr-input-container>
+        <label>Title</label>
+        <input [(ngModel)]="charity.title" name="title" value="{{charity.title}}" clrInput type="text"/>
+        <clr-control-error>You must include title</clr-control-error>
+    </clr-input-container>
+    <clr-textarea-container>
+        <label>Description</label>
+        <textarea [(ngModel)]="charity.description" name="description" value="{{charity.description}}" clrTextarea name="description" rows="6"></textarea>
+        <clr-control-error>You must include some description</clr-control-error>
+    </clr-textarea-container>
+    <clr-input-container>
+        <label>Budget required</label>
+        <input [(ngModel)]="charity.budgetRequired" name="budgetRequired" value="{{charity.budgetRequired}}" clrInput type="number"/>
+    </clr-input-container>
+    <clr-input-container>
+        <label>Volunteers required</label>
+        <input [(ngModel)]="charity.volunteersRequired" name="volunteersRequired" value="{{charity.volunteersRequired}}"clrInput type="number" />
+    </clr-input-container>
+
+    <div class="editBtn">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>

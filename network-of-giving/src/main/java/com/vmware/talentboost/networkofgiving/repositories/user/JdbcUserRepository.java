@@ -57,21 +57,21 @@ public class JdbcUserRepository implements IUserRepository {
     @Override
     public List<Charity> getAllParticipatedCharities(String username) {
         return jdbcTemplate.query("SELECT * FROM CHARITIES WHERE id IN" +
-                " (SELECT charity_id FROM USERS join PARTICIPANTS on id=user_id where username=?)", new CharityMapRower(), username);
+                " (SELECT charity_id FROM USERS join PARTICIPANTS on id=user_id where username=?) ORDER BY title", new CharityMapRower(), username);
     }
 
     @Override
     public List<Charity> getAllDonatedCharities(String username) {
 
         return jdbcTemplate.query("SELECT * FROM CHARITIES WHERE id IN" +
-                " (SELECT charity_id FROM USERS JOIN DONATORS ON id=user_id where username = ?)", new CharityMapRower(), username);
+                " (SELECT charity_id FROM USERS JOIN DONATORS ON id=user_id where username = ?) ORDER BY title", new CharityMapRower(), username);
     }
 
     @Override
     public List<Charity> getAllCreatedCharities(String username) {
 
         return jdbcTemplate.query("SELECT * FROM CHARITIES WHERE creator_id IN" +
-                " (SELECT id FROM USERS WHERE username = ?)", new CharityMapRower(), username);
+                " (SELECT id FROM USERS WHERE username = ?) ORDER BY title", new CharityMapRower(), username);
     }
 
 

@@ -10,57 +10,54 @@
       </div>
   </div>
 </div>
-  <div class="login-wrapper">
-    <form class="login" [formGroup]="registerForm" (ngSubmit)="register()">
-       
-        <div class="login-group">
-            
-           <clr-input-container>
-            <label class="clr-sr-only">Username</label>
-            <input type="text" formControlName="username" name="username" clrInput placeholder="Username" required minlength="5" />
-            <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
-            <clr-control-error *clrIfError="'minlength'">It must be at least 5 characters!</clr-control-error>
-           </clr-input-container>
+<div class="login-wrapper">
+  <form class="login" [formGroup]="registerForm" (ngSubmit)="register()">
+      <div class="login-group">
+          <clr-input-container>
+              <label class="clr-sr-only">Username</label>
+              <input type="text" formControlName="username" name="username" clrInput placeholder="Username" required minlength="5" />
+              <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+              <clr-control-error *clrIfError="'minlength'">It must be at least 5 characters!</clr-control-error>
+          </clr-input-container>
 
-            <clr-password-container>
-                  <input placeholder="Password" formControlName="password" clrPassword  name="password" required minlength="6" />
-                  <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
-                  <clr-control-error *clrIfError="'minlength'">It must be at least 6 characters!</clr-control-error>
-            </clr-password-container>
+          <clr-password-container>
+              <input placeholder="Password" formControlName="password" clrPassword name="password" required minlength="6" />
+              <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+              <clr-control-error *clrIfError="'minlength'">It must be at least 6 characters!</clr-control-error>
+          </clr-password-container>
 
-            <clr-input-container>
-                <label class="clr-sr-only">Name</label>
-                <input type="text" formControlName="name" name="name" clrInput placeholder="Name" required minlength="2"  />
-                <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
-                <clr-control-error *clrIfError="'minlength'"></clr-control-error>
-            </clr-input-container>
+          <clr-input-container>
+              <label class="clr-sr-only">Name</label>
+              <input type="text" formControlName="name" name="name" clrInput placeholder="Name" required minlength="2" />
+              <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+              <clr-control-error *clrIfError="'minlength'"></clr-control-error>
+          </clr-input-container>
 
-            <clr-input-container>
-                <label class="clr-sr-only">Age</label>
-                <input type="number" min="10" max="90" formControlName="age" name="age" clrInput placeholder="Age"/>
-            </clr-input-container>
-                  
-              <clr-radio-container clrInline>
-                    <label>Gender</label>
-                    <clr-radio-wrapper>
-                      <input type="radio" clrRadio name="options" required value="M" />
-                      <label>Male</label>
-                    </clr-radio-wrapper>
-                    <clr-radio-wrapper>
-                      <input type="radio" clrRadio name="options" required value="F" />
-                      <label>Female</label>
-                    </clr-radio-wrapper>
-        
-                </clr-radio-container>
-              
-                <clr-input-container>
-                    <label class="clr-sr-only">Location</label>
-                    <input type="text" formControlName="location" name="location" clrInput placeholder="Location"  />
-                    <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
-                </clr-input-container>
-           
-            <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid" >REGISTER</button>
-        
-        </div>
-    </form>
+          <clr-input-container>
+              <label class="clr-sr-only">Age</label>
+              <input type="number" min="10" max="90" formControlName="age" name="age" clrInput placeholder="Age" />
+          </clr-input-container>
+
+          <clr-radio-container clrInline>
+              <label>Gender</label>
+              <clr-radio-wrapper>
+                  <input type="radio" clrRadio name="options" required value="M" />
+                  <label>Male</label>
+              </clr-radio-wrapper>
+              <clr-radio-wrapper>
+                  <input type="radio" clrRadio name="options" required value="F" />
+                  <label>Female</label>
+              </clr-radio-wrapper>
+          </clr-radio-container>
+
+          <clr-input-container>
+              <label class="clr-sr-only">Location</label>
+              <input type="text" formControlName="location" name="location" clrInput placeholder="Location" />
+              <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+          </clr-input-container>
+
+          <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">REGISTER</button>
+      </div>
+  </form>
 </div>
+

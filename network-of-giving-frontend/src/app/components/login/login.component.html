@@ -1,36 +1,33 @@
-  
-    <div class="alert alert-danger" role="alert" *ngIf="invalidLogin">
-        <div class="alert-items">
-            <div class="alert-item static">
-                <div class="alert-icon-wrapper">
-                    <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
-                </div>
-                <span class="alert-text">
-                    Invalid username or password!
-                </span>
+<div class="alert alert-danger" role="alert" *ngIf="invalidLogin">
+    <div class="alert-items">
+        <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
             </div>
+            <span class="alert-text">
+                Invalid username or password!
+            </span>
         </div>
     </div>
+</div>
 
-    <div class="login-wrapper">
-      <form class="login" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
-         
-          <div class="login-group">
-              
-             <clr-input-container>
-              <label class="clr-sr-only">Username</label>
-              <input type="text" formControlName="username" name="username" clrInput placeholder="Username" required minlength="5" />
-              <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
-              <clr-control-error *clrIfError="'minlength'">It must be at least 5 characters!</clr-control-error>
-             </clr-input-container>
-  
-              <clr-password-container>
-                    <input placeholder="Password" formControlName="password" clrPassword  name="password" required minlength="6" />
-                    <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
-                    <clr-control-error *clrIfError="'minlength'">It must be at least 6 characters!</clr-control-error>
-              </clr-password-container>
-        
-              <button type="submit" class="btn btn-primary"  [disabled]="loginForm.invalid">LOGIN</button>
-          </div>
-      </form>
-  </div>
+<div class="login-wrapper">
+    <form class="login" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+        <div class="login-group">
+            <clr-input-container>
+                <label class="clr-sr-only">Username</label>
+                <input type="text" formControlName="username" name="username" clrInput placeholder="Username" required minlength="5" />
+                <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+                <clr-control-error *clrIfError="'minlength'">It must be at least 5 characters!</clr-control-error>
+            </clr-input-container>
+
+            <clr-password-container>
+                <input placeholder="Password" formControlName="password" clrPassword name="password" required minlength="6" />
+                <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
+                <clr-control-error *clrIfError="'minlength'">It must be at least 6 characters!</clr-control-error>
+            </clr-password-container>
+
+            <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">LOGIN</button>
+        </div>
+    </form>
+</div>

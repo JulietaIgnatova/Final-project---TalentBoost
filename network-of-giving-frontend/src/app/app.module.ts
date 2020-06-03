@@ -19,7 +19,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { ProfileComponent } from './components/profile/profile.component';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 import { ModalComponent } from './components/modal/modal.component';
-import { AuthInterceptor } from './_helpers/auth-interceptor.service'
+import { AuthInterceptor } from './_helpers/auth-interceptor.service';
+import { EditCharityComponent } from './components/edit-charity/edit-charity.component'
 
 @NgModule({
   declarations: [
@@ -34,7 +35,9 @@ import { AuthInterceptor } from './_helpers/auth-interceptor.service'
  
     ProfileComponent,
  
-    ModalComponent
+    ModalComponent,
+ 
+    EditCharityComponent
   ],
   imports: [
     BrowserModule,

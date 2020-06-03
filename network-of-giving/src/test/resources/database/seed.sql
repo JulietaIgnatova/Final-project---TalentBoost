@@ -23,13 +23,15 @@ CREATE TABLE IF NOT EXISTS Charities(
 
 CREATE TABLE IF NOT EXISTS Participants(
     user_id INT,
-    charity_id INT
+    charity_id INT,
+    participant_date timestamp default now()
 );
 
 CREATE TABLE IF NOT EXISTS Donators(
     user_id INT,
     charity_id INT,
-    donated_money DECIMAL
+    donated_money DECIMAL,
+    donation_date timestamp default now()
 );
 
 CREATE TABLE IF NOT EXISTS Useractions(
@@ -49,13 +51,13 @@ VALUES
 (1,'save the world','we are going to clean the world',10000,200,20,10),
 (2,'better world','good people',10000,200,20,10);
 
-INSERT INTO Participants
+INSERT INTO Participants(user_id, charity_id)
 values
 (1,1),
 (1,2),
 (2,2);
 
-INSERT INTO Donators
+INSERT INTO Donators(user_id, charity_id, donated_money)
 values
 (1,1,200.0),
 (1,2,300.0),

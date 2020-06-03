@@ -76,6 +76,7 @@ export class ViewCharityComponent implements OnInit, OnDestroy {
   }
   
   getCharity(title: string) {
+    if(this.currentUser){
     this.charityService.getCharity(title).pipe(mergeMap(
       data => {
         this.charity = data;
@@ -92,6 +93,13 @@ export class ViewCharityComponent implements OnInit, OnDestroy {
         this.noExistingCharity=true;
       }
     )
+    } else {
+      this.charityService.getCharity(title).subscribe(
+        data => {
+          this.charity = data;
+        }
+      )
+    }
   }
 
   volunteer(){

@@ -25,7 +25,7 @@ public class JdbcCharityRepository implements ICharityRepository {
     @Override
     public List<Charity> getAllCharities() {
 
-        return jdbcTemplate.query("SELECT * FROM CHARITIES", new CharityMapRower());
+        return jdbcTemplate.query("SELECT * FROM CHARITIES ORDER BY title", new CharityMapRower());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class JdbcCharityRepository implements ICharityRepository {
     public void addCharity(Charity charity) {
         jdbcTemplate.update("INSERT INTO CHARITIES(creator_id, title, description, budget_required, amount_collected, volunteers_required, volunteers_signed_up,image)" +
                         " VALUES (?, ?, ?, ?, ?, ?, ?, ?) ", charity.getCreatorId(), charity.getTitle(), charity.getDescription(),
-                charity.getBudgetRequired(), charity.getAmountCollected(), charity.getVolunteersRequired(), charity.getVolunteersSignedUp(),charity.getImage());
+                charity.getBudgetRequired(), charity.getAmountCollected(), charity.getVolunteersRequired(), charity.getVolunteersSignedUp(), charity.getImage());
 
     }
 
@@ -97,19 +97,18 @@ public class JdbcCharityRepository implements ICharityRepository {
 
     @Override
     public void participateInCharity(Charity charity, int userId) {
-        if(checkIfAlreadyParticipate(userId,charity.getId())) {
+        if (checkIfAlreadyParticipate(userId, charity.getId())) {
             throw new IllegalArgumentException("Already participated in this charity.");
         }
-        addParticipant(userId,charity.getId());
+        addParticipant(userId, charity.getId());
         charity.addVoluteer();
-        System.out.println("sssssa");
-        updateCharity(charity.getTitle(),charity);
+        updateCharity(charity.getTitle(), charity);
     }
 
     @Override
     public Double getSuggestionForDonation(int userId) {
-        Double result =jdbcTemplate.queryForObject("SELECT AVG(donated_money) FROM DONATORS WHERE user_id = ?", Double.class,userId);
-        if(result == null){
+        Double result = jdbcTemplate.queryForObject("SELECT AVG(donated_money) FROM DONATORS WHERE user_id = ?", Double.class, userId);
+        if (result == null) {
             return Double.valueOf(20);
         }
         return result;
@@ -118,7 +117,24 @@ public class JdbcCharityRepository implements ICharityRepository {
     @Override
     public List<Donation> getDonationsForCharity(String title) {
         return jdbcTemplate.query("SELECT user_id, charity_id, SUM(donated_money) as donated_money FROM Donators JOIN charities ON charity_id=id" +
-                " where title=? GROUP BY user_id, charity_id", new DonatorMapRower(), title);
+                " where title=? GROUP BY user_id, charity_id ORDER BY MAX(donation_date)", new DonatorMapRower(), title);
+    }
+
+
+    @Override
+    public void deleteDonation(int userId, int charityId) {
+        jdbcTemplate.update("DELETE FROM Donators WHERE user_id=? and charity_id=?", userId, charityId);
+    }
+
+
+
+    public void updateDonation(int userId, int charityId, Double money) {
+        jdbcTemplate.update("UPDATE DONATORS SET donated_money = donated_money + ? WHERE user_id = ? and charity_id = ?", money, userId, charityId);
+    }
+
+    @Override
+    public void setMoneyToDonation(int userId, int charityId, Double money) {
+        jdbcTemplate.update("UPDATE DONATORS SET donated_money = ? WHERE user_id = ? and charity_id = ?", money, userId, charityId);
     }
 
     private void addDonater(int userId, int chariryId, double money) {
@@ -129,15 +145,12 @@ public class JdbcCharityRepository implements ICharityRepository {
         return !isEmpty(jdbcTemplate.query("SELECT * FROM DONATORS WHERE user_id = ? AND charity_id =?", new DonatorMapRower(), userId, charityId));
     }
 
-    private void updateDonation(int userId, int charityId, double money) {
-        jdbcTemplate.update("UPDATE DONATORS SET donated_money = donated_money + ?", money);
-    }
 
     private boolean checkIfAlreadyParticipate(int userId, int charityId) {
         return !isEmpty(jdbcTemplate.query("SELECT * FROM PARTICIPANTS WHERE user_id = ? AND charity_id =?", new ParticipantMapRower(), userId, charityId));
     }
 
-    private void addParticipant(int userId, int chariryId){
-        jdbcTemplate.update("INSERT INTO PARTICIPANTS(user_id, charity_id) VALUES(?,?)",userId,chariryId);
+    private void addParticipant(int userId, int chariryId) {
+        jdbcTemplate.update("INSERT INTO PARTICIPANTS(user_id, charity_id) VALUES(?,?)", userId, chariryId);
     }
 }

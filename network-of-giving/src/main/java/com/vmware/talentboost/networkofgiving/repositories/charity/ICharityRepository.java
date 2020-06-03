@@ -34,4 +34,9 @@ public interface ICharityRepository {
 
     List<Donation> getDonationsForCharity(String title);
 
+    void setMoneyToDonation(int userId,int charityId, Double money);
+
+    void deleteDonation(int userId,int charityId);
+
+
 }

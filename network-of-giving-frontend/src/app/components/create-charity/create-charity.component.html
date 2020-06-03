@@ -5,21 +5,22 @@
                 <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
             </div>
             <span class="alert-text">
-                There is charity with the same title! 
+                There is charity with the same title!
             </span>
         </div>
     </div>
 </div>
 
-<form class ="createChariry" clrForm [formGroup]="charityForm" (ngSubmit)="submitCharity()">
-    <h3><strong>Create charity form:</strong> </h3><br>
+<form class="createChariry" clrForm [formGroup]="charityForm" (ngSubmit)="submitCharity()">
+    <h3><strong>Create charity form:</strong></h3>
+    <br />
     <clr-input-container>
         <label>Title</label>
         <input clrInput type="text" formControlName="title" />
         <clr-control-error>Must include title</clr-control-error>
     </clr-input-container>
 
-     <clr-textarea-container>
+    <clr-textarea-container>
         <label>Description</label>
         <textarea clrTextarea type="text" formControlName="description" rows="6"></textarea>
         <clr-control-error>Must include description</clr-control-error>
@@ -34,31 +35,29 @@
         <label>Volunteers required</label>
         <input clrInput type="number" formControlName="volunteersRequired" />
     </clr-input-container>
-    
+
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-3">   
+            <div class="col-md-6 offset-md-3">
                 <div class="form-group">
                     <input type="file" accept="image/*" (change)="processFile($event)" />
                 </div>
-               
             </div>
         </div>
     </div>
 
     <div class="createBtn">
-    <button type="submit" class="btn btn-primary" >Create</button>
+        <button type="submit" class="btn btn-primary">Create</button>
     </div>
-    
 </form>
 
 <clr-modal [(clrModalOpen)]="charityCreateModal" [clrModalClosable]="true">
-    <h3 class="modal-title" >{{validMessage}}</h3>
+    <h3 class="modal-title">{{validMessage}}</h3>
     <div class="modal-body">
         <p>Do you want to create new?</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn btn-primary" (click)="cancel()">Cancel</button>
-      <button type="button" class="btn btn-outline" (click)="ok()">YES</button>
+        <button type="button" class="btn btn btn-primary" (click)="cancel()">Cancel</button>
+        <button type="button" class="btn btn-outline" (click)="ok()">YES</button>
     </div>
-  </clr-modal>
+</clr-modal>

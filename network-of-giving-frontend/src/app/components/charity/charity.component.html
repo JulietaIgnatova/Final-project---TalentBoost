@@ -1,41 +1,42 @@
 <div class="flex-container">
     <div class="allInfo">
-     <div class="create"  *ngIf="currentUser">
-        <a href="/createCharity" class="btn btn-primary btn-icon" >
-          <clr-icon shape="plus"></clr-icon>
-             Create
-        </a>
-    </div>
+        <div class="create" *ngIf="currentUser">
+            <a href="/createCharity" class="btn btn-primary btn-icon">
+                <clr-icon shape="plus"></clr-icon>
+                Create
+            </a>
+        </div>
 
-  <div class="clr-row">
-    <div class="clr-col-sm-4 clr-col-md-4" *ngFor='let charity of charities'>
-            <div class="card" >
-                <div class="card-header">
-                {{charity.title}}
-                </div>
-
-                <div class="card-img">
-                    <img [src]="'data:image/png;base64,' + charity.imageBase64" alt=""/>
-                </div>
-            
-                <div class="card-block">
-                    <div class="card-text1" >
-                        <p> {{charity.description}} </p>
-                           
+        <div class="clr-row">
+            <div class="clr-col-sm-4 clr-col-md-4" *ngFor="let charity of charities">
+                <div class="card">
+                    <div class="card-header">
+                        {{charity.title}}
                     </div>
 
-                    <div class="card-text" >       
-                        <p><strong _ngcontent-c2="">{{"Amount required:"}} </strong> {{charity.budgetRequired}}<br>
-                         <strong _ngcontent-c2="">{{"Amount collected:"}} </strong> {{charity.amountCollected}}</p>
+                    <div class="card-img">
+                        <img [src]="'data:image/png;base64,' + charity.imageBase64" alt="" />
+                    </div>
+
+                    <div class="card-block">
+                        <div class="card-text1">
+                            <p>{{charity.description}}</p>
+                        </div>
+
+                        <div class="card-text">
+                            <p>
+                                <strong _ngcontent-c2="">{{"Amount required:"}} </strong> {{charity.budgetRequired}}<br />
+                                <strong _ngcontent-c2="">{{"Amount collected:"}} </strong> {{charity.amountCollected}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <a [routerLink]="['/charity/view', charity.title]" class="btn btn-sm btn-link">See more</a>
                     </div>
                 </div>
-                
-                <div class="card-footer">
-                    <a [routerLink]="['/charity/view', charity.title]" class="btn btn-sm btn-link">See more</a>
-               </div>
             </div>
-            
-      </div>
-   </div>
- </div>
+        </div>
+    </div>
 </div>
+

@@ -33,13 +33,15 @@ CREATE TABLE IF NOT EXISTS Charities(
 
 CREATE TABLE IF NOT EXISTS Participants(
     user_id INT,
-    charity_id INT
+    charity_id INT,
+    participant_date timestamp default now()
 );
 
 CREATE TABLE IF NOT EXISTS Donators(
     user_id INT,
     charity_id INT,
-    donated_money DECIMAL
+    donated_money DECIMAL,
+    donation_date timestamp default now()
 );
 
 
