@@ -24,6 +24,7 @@ build-frontend:
   image: trion/ng-cli
   before_script:
       - cd network-of-giving-frontend
+      - npm ci
   script:
       - ng build
 
