@@ -5,13 +5,14 @@ This is a Single Page Appliaction with client-side rendering. It includes [backe
 The frontend client makes API calls to the backend server when it is running.
 
 ## Screenshot
-
+![home-page](images/home-page.png)
+![view-charity](images/view-charity.png)
 
 ## Features
 - REST API
 - Base authentication
 - Login / Register
-- Create charity
+- Create / Edit charity
 - Donate / Participate in charity
 - Delete charity you have created
 - Profile page
@@ -40,7 +41,7 @@ Start the backend server before the frontend client.
 
 **Backend**
 
-  1. Install [PostgreSQL](https://www.postgresql.org/download/) 
+  1. Install [PostgreSQL](https://www.postgresql.org/download/) and run the file in `databse/database_schema.sql`.
   2. Configure datasource in `application.properties`.
   3. `cd network-of-giving`.
   4. Run `mvn install`.
