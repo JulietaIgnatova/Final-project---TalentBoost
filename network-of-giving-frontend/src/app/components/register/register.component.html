@@ -15,9 +15,9 @@
       <div class="login-group">
           <clr-input-container>
               <label class="clr-sr-only">Username</label>
-              <input type="text" formControlName="username" name="username" clrInput placeholder="Username" required minlength="5" />
+              <input type="text" formControlName="username" name="username" clrInput placeholder="Username" required minlength="4" />
               <clr-control-error *clrIfError="'required'">This field is required!</clr-control-error>
-              <clr-control-error *clrIfError="'minlength'">It must be at least 5 characters!</clr-control-error>
+              <clr-control-error *clrIfError="'minlength'">It must be at least 4 characters!</clr-control-error>
           </clr-input-container>
 
           <clr-password-container>

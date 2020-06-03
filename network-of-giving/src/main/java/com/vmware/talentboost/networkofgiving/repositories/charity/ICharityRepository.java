@@ -31,7 +31,6 @@ public interface ICharityRepository {
 
     Double getSuggestionForDonation(int userId);
 
-
     List<Donation> getDonationsForCharity(String title);
 
     void setMoneyToDonation(int userId,int charityId, Double money);

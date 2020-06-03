@@ -14,6 +14,10 @@ export class EditCharityComponent implements OnInit {
   charity: Charity;
   selectedFile: File;
   currentCharityTitle: string;
+  showAlertMessage = false;
+  charityEditModal = false;
+  alertMessage: string;
+
   constructor(private charityService: CharityService,
     private route: ActivatedRoute,
     private router: Router,
@@ -27,6 +31,7 @@ export class EditCharityComponent implements OnInit {
   getCharity(title){
     this.charityService.getCharity(title).subscribe(
       data => {
+       
         this.charity = data
       },
       err => {
@@ -35,17 +40,29 @@ export class EditCharityComponent implements OnInit {
     )
   }
   editCharity(){
+    if(this.charity.title == ''){
+      this.showAlertMessage=true;
+      this.alertMessage = "Cannot submit the form! Enter a title! "
+      return;
+    }
     this.charityService.updateCharity(this.charity, this.currentCharityTitle).subscribe(
       data => {
-        //go to view-page
-        this.router.navigate([`/charity/view/${this.charity.title}`])
+        this.charityEditModal = true;
+        this.showAlertMessage=false;
+        
         return true;
       },
       err => {
-        // show error message
+        this.showAlertMessage=true;
+        this.alertMessage = "Already exists charity with the same title!";
         console.log(err)
       }
     )
+  }
+
+  public ok(): void {
+    this.charityEditModal = false;
+    this.router.navigate([`/charity/view/${this.charity.title}`])
   }
   
 }

@@ -51,7 +51,7 @@
           <p>
               <strong _ngcontent-c2="">{{"Amount required:"}} </strong> {{charity.budgetRequired}} <strong>{{"/ "}}</strong> <strong _ngcontent-c2="">{{"Amount collected:"}} </strong> {{charity.amountCollected}}<br />
               <strong _ngcontent-c2="">{{"Participants required:"}} </strong> {{charity.volunteersRequired}} <strong>{{"/ "}}</strong> <strong _ngcontent-c2="">{{"Participants signed up: "}} </strong>{{charity.volunteersSignedUp}}
-          </p>
+          </p><br>
           <div *ngIf="currentUser">
               <button class="btn btn-primary" (click)="donatePopUp()" *ngIf="charity.amountCollected != charity.budgetRequired; else collected">Donate</button>
               <button class="btn btn=primary" (click)="volunteerPopUp()" *ngIf="charity.volunteersSignedUp != charity.volunteersRequired; else signedUp">Volunteer</button>

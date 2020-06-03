@@ -14,7 +14,7 @@ public interface ICharityService {
 
     void updateCharity(String title, Charity charity);
 
-    void deleteCharity(Charity charity,String title);
+    void deleteCharity(Charity charity, String title);
 
     List<User> getParticipantsForCharity(String title);
 

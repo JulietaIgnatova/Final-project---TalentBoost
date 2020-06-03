@@ -1,3 +1,16 @@
+<div class="alert alert-danger" role="alert" *ngIf="showAlertMessage">
+    <div class="alert-items">
+        <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+            </div>
+            <span class="alert-text">
+                {{alertMessage}}
+            </span>
+        </div>
+    </div>
+</div>
+
 <form class="editCharity" clrForm *ngIf="currentUser && charity" (ngSubmit)="editCharity()">
     <h3><strong>Edit charity form:</strong></h3>
     <br />
@@ -24,3 +37,11 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
+
+<clr-modal [(clrModalOpen)]="charityEditModal" [clrModalClosable]="true">
+    <h3 class="modal-title">Successfully edited charity!</h3>
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="ok()">Go back</button>
+    </div>
+</clr-modal>

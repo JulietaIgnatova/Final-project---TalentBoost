@@ -5,7 +5,7 @@
                 <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
             </div>
             <span class="alert-text">
-                There is charity with the same title!
+                Already exists charity with the same title!
             </span>
         </div>
     </div>
@@ -54,7 +54,7 @@
 <clr-modal [(clrModalOpen)]="charityCreateModal" [clrModalClosable]="true">
     <h3 class="modal-title">{{validMessage}}</h3>
     <div class="modal-body">
-        <p>Do you want to create new?</p>
+        <h5>Do you want to create new?</h5>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn btn-primary" (click)="cancel()">Cancel</button>

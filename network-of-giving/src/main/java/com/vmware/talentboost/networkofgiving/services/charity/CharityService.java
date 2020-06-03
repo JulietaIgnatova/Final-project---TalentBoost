@@ -1,9 +1,13 @@
 package com.vmware.talentboost.networkofgiving.services.charity;
 
-import com.vmware.talentboost.networkofgiving.models.*;
+import com.vmware.talentboost.networkofgiving.models.Charity;
+import com.vmware.talentboost.networkofgiving.models.Donation;
+import com.vmware.talentboost.networkofgiving.models.User;
+import com.vmware.talentboost.networkofgiving.models.UserAction;
 import com.vmware.talentboost.networkofgiving.repositories.charity.ICharityRepository;
 import com.vmware.talentboost.networkofgiving.repositories.participant.IParticipantRepository;
 import com.vmware.talentboost.networkofgiving.repositories.useraction.IUserActionRepository;
+import com.vmware.talentboost.networkofgiving.services.ActivityManager;
 import com.vmware.talentboost.networkofgiving.util.format.UserActivityFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,12 +22,14 @@ public class CharityService implements ICharityService {
     private final ICharityRepository repository;
     private final IUserActionRepository actionRepository;
     private final IParticipantRepository participantRepository;
+    private final ActivityManager activityManager;
 
     @Autowired
-    public CharityService(ICharityRepository repository, IUserActionRepository actionRepository, IParticipantRepository participantRepository) {
+    public CharityService(ICharityRepository repository, IUserActionRepository actionRepository, IParticipantRepository participantRepository, ActivityManager activityManager) {
         this.repository = repository;
         this.actionRepository = actionRepository;
         this.participantRepository = participantRepository;
+        this.activityManager = activityManager;
     }
 
     @Override
@@ -56,9 +62,9 @@ public class CharityService implements ICharityService {
 
         Charity oldCharity = repository.getCharity(title);
 
-        updateCurrentBudgedIfNeeded(oldCharity, charity);
+        activityManager.updateCurrentBudgedIfNeeded(oldCharity, charity);
 
-        updateParticipantsIfNeeded(oldCharity, charity);
+        activityManager.updateParticipantsIfNeeded(oldCharity, charity);
 
         repository.updateCharity(title, charity);
     }
@@ -199,50 +205,5 @@ public class CharityService implements ICharityService {
         }
     }
 
-    private void updateParticipantsIfNeeded(Charity oldCharity, Charity newCharity) {
-        int participantsDiff = oldCharity.getVolunteersRequired() - newCharity.getVolunteersRequired();
-        int participantsToRemove = oldCharity.getVolunteersSignedUp() - newCharity.getVolunteersRequired();
-
-        if ((participantsDiff > 0) && (participantsToRemove > 0)) {
-            List<Participant> participantsForCharity = participantRepository.getAllParticipants(oldCharity.getTitle());
-
-            for (int i = 0; i < participantsToRemove; i++) {
-                participantRepository.deleteParticipant(participantsForCharity.get(i).getUserId(), participantsForCharity.get(i).getCharityId());
-                newCharity.setVolunteersSignedUp(newCharity.getVolunteersSignedUp() - 1);
-                String describeAction = String.format(UserActivityFormat.NOTIFY_ON_UPDATE_PARTICIPANTS, newCharity.getTitle());
-                actionRepository.addUserAction(new UserAction(participantsForCharity.get(i).getUserId(), describeAction, newCharity.getTitle()));
-            }
-        }
-    }
-
-    private void updateCurrentBudgedIfNeeded(Charity oldCharity, Charity newCharity) {
-        Double diffBudget = oldCharity.getBudgetRequired() - newCharity.getBudgetRequired();
-        Double targetMoney = oldCharity.getAmountCollected() - newCharity.getBudgetRequired();
-        if ((diffBudget > 0) && (targetMoney > 0)) {
-            List<Donation> donationsForCharity = repository.getDonationsForCharity(oldCharity.getTitle());
-            for (Donation donation : donationsForCharity) {
-                Double moneyToReturn = donation.getMoney();
-                if ((targetMoney - moneyToReturn) < 0) {
-                    //update donation
-                    repository.setMoneyToDonation(donation.getUserId(), donation.getCharityId(), moneyToReturn - targetMoney);
-                    newCharity.setAmountCollected(newCharity.getAmountCollected() - targetMoney); // set new amount
-                    String describeAction = String.format(UserActivityFormat.NOTIFY_ON_UPDATE_MONEY, targetMoney, newCharity.getTitle());
-                    actionRepository.addUserAction(new UserAction(donation.getUserId(), describeAction, newCharity.getTitle()));
-                    return;
-                }
-                newCharity.setAmountCollected(newCharity.getAmountCollected() - moneyToReturn); // set new amount
-                //delete donation
-                repository.deleteDonation(donation.getUserId(), donation.getCharityId());
-                String describeAction = String.format(UserActivityFormat.NOTIFY_ON_UPDATE_MONEY, donation.getMoney(), newCharity.getTitle());
-                actionRepository.addUserAction(new UserAction(donation.getUserId(), describeAction, newCharity.getTitle()));
-                targetMoney = newCharity.getAmountCollected() - newCharity.getBudgetRequired();
-
-                if (targetMoney <= 0) {
-                    //all money are returned
-                    return;
-                }
-            }
-        }
-    }
 
 }
