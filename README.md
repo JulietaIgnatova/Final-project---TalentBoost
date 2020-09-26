@@ -1,7 +1,7 @@
 # Network for giving
 
 #### A full-stack web application using Spring Boot 5.2 and Angular 9. 
-This is a Single Page Appliaction with client-side rendering. It includes [backend](https://gitlab-talentboost.vmware.com/jignatova/final-project-talentboost/-/tree/master/network-of-giving) and [frontend](https://gitlab-talentboost.vmware.com/jignatova/final-project-talentboost/-/tree/master/network-of-giving-frontend) .
+This is a Single Page Appliaction with client-side rendering. It includes [backend](https://github.com/JulietaIgnatova/Final-project-TalentBoost/tree/master/network-of-giving) and [frontend](https://github.com/JulietaIgnatova/Final-project-TalentBoost/tree/master/network-of-giving-frontend) .
 The frontend client makes API calls to the backend server when it is running.
 
 ## Screenshot
